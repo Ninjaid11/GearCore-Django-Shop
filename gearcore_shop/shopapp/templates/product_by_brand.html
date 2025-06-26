@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="line-with-text">
+  <h2>{{ brand.name }}</h2>
+  <div class="line"></div>
+</div>
+
+<div class="products">
+  {% for product in products %}
+    <div class="product-card">
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.description|truncatewords:20 }}</p>
+        <span class="price">{{ product.price }} грн</span>
+        <div class="tags">
+            {% for tag in product.tags.all %}
+            <span class="tag">{{ tag.name }}</span>
+            {% endfor %}
+        </div>
+        <a href="#">🛒 Корзина</a>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

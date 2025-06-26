@@ -1,0 +1,5 @@
+from .models import Category
+
+def catalog_context(request):
+    categories = Category.objects.all().prefetch_related('brands')
+    return {'catalog_categories': categories}

@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GearCore</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+          <div class="container">
+            <div class="logo">
+              <h1>GearCore</h1>
+            </div>
+
+
+            <div class="right-section">
+                <div class="dropdown" id="catalog-dropdown">
+                  <button class="dropdown-btn">Каталог товаров ⯆</button>
+                  <div class="dropdown-content">
+                    <div class="dropdown-item">
+                      <span class="submenu-trigger">🎮 Товары для геймеров ⯈</span>
+                      <div class="submenu">
+                        {% for category in catalog_categories %}
+                          <div class="submenu-column">
+                            <strong>
+                              <a href="{% url 'products_by_category' category.id %}">{{ category.name }}</a>
+                            </strong>
+                            {% for brand in category.brands.all %}
+                              <a href="{% url 'product_by_brand' brand.id %}">{{ brand.name }}</a>
+                            {% endfor %}
+                          </div>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <nav>
+                  <a href="#">Корзина</a>
+                  <a href="#">Вход</a>
+                </nav>
+                <form action="{% url 'product_search' %}" method="get" class="search-form">
+                    <input name="q" type="text" placeholder="Поиск товаров..." value="{{ request.GET.q }}">
+                    <button type="submit" class="search-button">🔍</button>
+                </form>
+              </div>
+          </div>
+        </header>
+
+
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+
+        <footer>
+            <p>&copy; 2025 GearCore. Все права защищены.</p>
+        </footer>
+    </div>
+
+
+</body>
+</html>

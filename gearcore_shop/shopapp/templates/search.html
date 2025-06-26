@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/search.css' %}">
+{% endblock %}
+
+{% block content %}
+  <h2 class="search-results">Результаты поиска по запросу: "{{ query }}"</h2>
+  <div class="products">
+    {% if products %}
+      {% for product in products %}
+        <div class="product-card">
+          <img src="{{ product.image.url }}" alt="{{ product.name }}">
+          <h3>{{ product.name }}</h3>
+          <p>{{ product.description|truncatewords:20 }}</p>
+          <span class="price">{{ product.price }} грн</span>
+          <div class="tags">
+            {% for tag in product.tags.all %}
+              <span class="tag">{{ tag.name }}</span>
+            {% endfor %}
+          </div>
+          <a href="#">🛒 Корзина</a>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="no-results">Ничего не найдено.</p>
+    {% endif %}
+
+    {% if error %}
+      <p class="error-message">{{ error }}</p>
+    {% endif %}
+  </div>
+{% endblock %}
