@@ -1,4 +1,4 @@
-# PYTHON_1y_26_07_11_23 Django
+# GearShop Django
 
 ### How use
 
