@@ -225,7 +225,42 @@ main {
   flex: 1;
   position: relative;
   z-index: 1;
-  padding: 20px 0;
+}
+/* ==================== БРЕНДЫ ==================== */
+
+.brands-row {
+  display: flex;
+  flex-wrap: nowrap; /* все в одну строку, если много — будет скролл */
+  overflow-x: auto;   /* горизонтальная прокрутка, если не помещаются */
+  gap: 16px;          /* расстояние между карточками */
+  padding: 10px 0;
+}
+
+.brand-card-link {
+  text-decoration: none;  /* убрать подчёркивание у ссылки */
+  color: inherit;         /* цвет текста как у окружающего */
+  flex: 0 0 auto;         /* чтобы карточки не растягивались */
+  transition: transform 0.3s ease;
+}
+
+.brand-card-link:hover {
+  transform: scale(1.05);
+}
+
+.brand-card {
+  width: 120px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  text-align: center;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  cursor: pointer;
+}
+
+.brand-logo {
+  max-width: 100%;
+  height: auto;
 }
 
 /* ==================== ТОВАРЫ ==================== */

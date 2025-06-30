@@ -28,10 +28,10 @@
                         {% for category in catalog_categories %}
                           <div class="submenu-column">
                             <strong>
-                              <a href="{% url 'products_by_category' category.id %}">{{ category.name }}</a>
+                              <a href="{% url 'products_by_category' category.name %}">{{ category.name }}</a>
                             </strong>
                             {% for brand in category.brands.all %}
-                              <a href="{% url 'product_by_brand' brand.id %}">{{ brand.name }}</a>
+                              <a href="{% url 'product_by_brand' brand.name %}">{{ brand.name }}</a>
                             {% endfor %}
                           </div>
                         {% endfor %}
@@ -62,6 +62,29 @@
         </footer>
     </div>
 
+<script>
 
+document.addEventListener('DOMContentLoaded', () => {
+  const dropdownBtn = document.querySelector('.dropdown-btn');
+  const dropdownContent = document.querySelector('.dropdown-content');
+  const submenuTrigger = document.querySelector('.submenu-trigger');
+  const submenu = document.querySelector('.submenu');
+
+  dropdownBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dropdownContent.classList.toggle('show');
+  });
+
+  submenuTrigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    submenu.classList.toggle('show');
+  });
+
+  document.addEventListener('click', () => {
+    dropdownContent.classList.remove('show');
+    submenu.classList.remove('show');
+  });
+});
+</script>
 </body>
 </html>

@@ -7,7 +7,11 @@ from .models import Product, Brand, Category
 
 def index(request):
     products = Product.objects.all()
-    return render(request, "index.html", {'products': products})\
+    brand = Brand.objects.all()
+    return render(request, "index.html", {
+        'products': products,
+        'brands': brand
+    })
 
 def product_search(request):
     query = request.GET.get('q', '')
@@ -23,16 +27,16 @@ def product_search(request):
 
     return render(request, "search.html", {'products': products, 'query': query})
 
-def products_by_category(request, category_id):
-    category = get_object_or_404(Category, id=category_id)
+def products_by_category(request, category_name):
+    category = get_object_or_404(Category, name__iexact=category_name)
     products = Product.objects.filter(category=category)
     return render(request, 'products_by_category.html', {
         'category': category,
         'products': products
     })
 
-def product_by_brand(request, brand_id):
-    brand = get_object_or_404(Brand, id=brand_id)
+def product_by_brand(request, brand_name):
+    brand = get_object_or_404(Brand, name__iexact=brand_name)
     products = Product.objects.filter(brand=brand)
     return render(request, 'product_by_brand.html', {
         'brand': brand,

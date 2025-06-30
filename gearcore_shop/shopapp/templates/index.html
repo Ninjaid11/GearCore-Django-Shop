@@ -11,6 +11,18 @@
   <video id="bg-video" autoplay muted playsinline></video>
 </div>
 
+<div class="brands-row">
+  {% for brand in brands %}
+    <a href="{% url 'product_by_brand' brand.name %}" class="brand-card-link">
+      <div class="brand-card">
+        {% if brand.logo %}
+          <img src="{{ brand.logo.url }}" alt="{{ brand.name }}" class="brand-logo">
+        {% endif %}
+      </div>
+    </a>
+  {% endfor %}
+</div>
+
 <h2>Наши продукты</h2>
 <div class="products">
     {% for product in products %}
