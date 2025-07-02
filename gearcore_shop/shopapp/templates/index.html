@@ -9,9 +9,15 @@
   "{% static "videos/video4.mp4" %}"
 ]'>
   <video id="bg-video" autoplay muted playsinline></video>
+
+  <div class="hero-text">
+    <h2>EVERYTHING YOU NEED</h2>
+    <h1>TO <b>PERFORM</b> YOUR BEST</h1>
+    <a href="#brands" class="scroll-down">&#8595;</a>
+  </div>
 </div>
 
-<div class="brands-row">
+<div class="brands-row" id="brands">
   {% for brand in brands %}
     <a href="{% url 'product_by_brand' brand.name %}" class="brand-card-link">
       <div class="brand-card">
@@ -42,4 +48,5 @@
 </div>
 
 <script src="{% static 'js/video-bg.js' %}"></script>
+<script src="{% static 'js/scroll.js' %}"></script>
 {% endblock %}

@@ -9,6 +9,11 @@
   --color-product-bg: #222;
   --color-tag-bg: #333;
   --color-highlight: #0f0;
+  --color-bg-darker: #111;
+  --color-white: #fff;
+  --color-border-dark: #444;
+  --color-placeholder: #aaa;
+  --color-bg-main: rgb(15, 17, 17);
 }
 
 /* ==================== БАЗОВАЯ СБРОС И ОСНОВА ==================== */
@@ -40,10 +45,17 @@ html, body {
   font-weight: 900;
   text-transform: uppercase;
   color: var(--color-gold);
-  text-shadow: 0 0 25px var(--color-gold), 0 0 5px #fff;
+  text-shadow: 0 0 25px var(--color-gold), 0 0 5px var(--color-white);
   margin-left: -6em;
   user-select: none;
   line-height: 1;
+}
+
+.logo a {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block;
 }
 
 /* ==================== ШАПКА ==================== */
@@ -110,7 +122,7 @@ nav a:hover {
 
 .dropdown-btn:hover {
   background-color: var(--color-gold);
-  color: #000;
+  color: var(--color-bg-dark);
   box-shadow: 0 0 15px var(--color-gold);
 }
 
@@ -118,7 +130,7 @@ nav a:hover {
   position: absolute;
   top: 100%;
   left: 0;
-  background: #111;
+  background: var(--color-bg-darker);
   border: 2px solid var(--color-gold);
   border-radius: 10px;
   min-width: 280px;
@@ -181,7 +193,7 @@ nav a:hover {
 }
 
 .search-form input[type="text"] {
-  background-color: #111;
+  background-color: var(--color-bg-darker);
   color: var(--color-gold);
   border: 2px solid var(--color-gold);
   border-radius: 8px;
@@ -192,12 +204,12 @@ nav a:hover {
 }
 
 .search-form input::placeholder {
-  color: #aaa;
+  color: var(--color-placeholder);
 }
 
 .search-form input:focus {
   outline: none;
-  background-color: #000;
+  background-color: var(--color-bg-dark);
   box-shadow: 0 0 10px var(--color-gold);
 }
 
@@ -220,26 +232,27 @@ nav a:hover {
 
 /* ==================== КОНТЕНТ ==================== */
 main {
-  background-color: rgb(15, 17, 17);
+  background-color: var(--color-bg-main);
   color: var(--color-text);
   flex: 1;
   position: relative;
   z-index: 1;
 }
 /* ==================== БРЕНДЫ ==================== */
-
 .brands-row {
   display: flex;
-  flex-wrap: nowrap; /* все в одну строку, если много — будет скролл */
-  overflow-x: auto;   /* горизонтальная прокрутка, если не помещаются */
-  gap: 16px;          /* расстояние между карточками */
-  padding: 10px 0;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 5%;
+  padding: 10px;
+  justify-content: center;
+  margin: 10px 0;
 }
 
 .brand-card-link {
-  text-decoration: none;  /* убрать подчёркивание у ссылки */
-  color: inherit;         /* цвет текста как у окружающего */
-  flex: 0 0 auto;         /* чтобы карточки не растягивались */
+  text-decoration: none;
+  color: inherit;
+  flex: 0 0 auto;
   transition: transform 0.3s ease;
 }
 
@@ -248,21 +261,21 @@ main {
 }
 
 .brand-card {
-  width: 120px;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  text-align: center;
-  background-color: #fff;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  cursor: pointer;
+  width: 200px;
+  height: 180px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
 }
 
 .brand-logo {
   max-width: 100%;
-  height: auto;
+  max-height: 100%;
+  object-fit: contain;
 }
-
 /* ==================== ТОВАРЫ ==================== */
 .products {
   display: grid;
@@ -273,7 +286,7 @@ main {
 .product-card {
   background-color: var(--color-product-bg);
   padding: 15px;
-  border: 1px solid #444;
+  border: 1px solid var(--color-border-dark);
   border-radius: 8px;
   text-align: center;
   animation: fadeInUp 0.6s ease both;
@@ -367,7 +380,7 @@ footer {
   color: var(--color-text-alt);
   text-align: center;
   padding: 15px;
-  border-top: 1px solid #444;
+  border-top: 1px solid var(--color-border-dark);
   position: relative;
   z-index: 1;
 }
@@ -384,6 +397,65 @@ footer {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.hero-text {
+  position: absolute;
+  top: 68%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  z-index: 2;
+  text-shadow: 0 4px 12px rgba(0,0,0,0.9);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 90vw;
+  user-select: none;
+  opacity: 0;
+  animation: fadeInUpHero 1.2s ease forwards;
+  animation-delay: 0.3s;
+}
+
+.hero-text h2 {
+  font-size: 1.6rem;
+  font-weight: 400;
+  letter-spacing: 4px;
+  margin: 0 0 12px 0;
+  text-transform: uppercase;
+  color: #00bfff;
+  text-shadow: 0 3px 8px rgba(0,0,0,0.8);
+}
+
+.hero-text h1 {
+  font-size: 3.8rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  line-height: 1.1;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.hero-text h1 b {
+  color: #00bfff;
+  text-shadow: 0 0 10px #00bfff;
+  font-weight: 900;
+}
+
+.scroll-down {
+  display: inline-block;
+  font-size: 3.5rem;
+  color: var(--color-white);
+  text-decoration: none;
+  cursor: pointer;
+  animation: bounce 2s infinite;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
+  margin-top: 18px;
+  transition: color 0.3s ease, filter 0.3s ease;
+}
+
+.scroll-down:hover {
+  color: #00bfff;
+  filter: drop-shadow(0 0 12px #00bfff);
 }
 
 /* ==================== АДАПТИВНОСТЬ ==================== */
@@ -425,4 +497,24 @@ footer {
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(15px);
+  }
+}
+
+@keyframes fadeInUpHero {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
 }

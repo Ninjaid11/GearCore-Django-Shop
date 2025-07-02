@@ -14,9 +14,8 @@
         <header>
           <div class="container">
             <div class="logo">
-              <h1>GearCore</h1>
+              <h1><a href="/">GearCore</a></h1>
             </div>
-
 
             <div class="right-section">
                 <div class="dropdown" id="catalog-dropdown">
@@ -62,29 +61,6 @@
         </footer>
     </div>
 
-<script>
-
-document.addEventListener('DOMContentLoaded', () => {
-  const dropdownBtn = document.querySelector('.dropdown-btn');
-  const dropdownContent = document.querySelector('.dropdown-content');
-  const submenuTrigger = document.querySelector('.submenu-trigger');
-  const submenu = document.querySelector('.submenu');
-
-  dropdownBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    dropdownContent.classList.toggle('show');
-  });
-
-  submenuTrigger.addEventListener('click', (e) => {
-    e.stopPropagation();
-    submenu.classList.toggle('show');
-  });
-
-  document.addEventListener('click', () => {
-    dropdownContent.classList.remove('show');
-    submenu.classList.remove('show');
-  });
-});
-</script>
+<script src="{% static 'js/menu.js' %}"></script>
 </body>
 </html>
