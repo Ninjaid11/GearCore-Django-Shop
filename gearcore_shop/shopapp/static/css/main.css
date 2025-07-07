@@ -39,6 +39,14 @@ html, body {
 }
 
 /* ==================== ЛОГОТИП ==================== */
+.logo {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  user-select: none;
+}
+
 .logo h1 {
   font-size: 3em;
   letter-spacing: 4px;
@@ -46,9 +54,9 @@ html, body {
   text-transform: uppercase;
   color: var(--color-gold);
   text-shadow: 0 0 25px var(--color-gold), 0 0 5px var(--color-white);
-  margin-left: -6em;
   user-select: none;
   line-height: 1;
+  margin: 0;
 }
 
 .logo a {
@@ -60,27 +68,72 @@ html, body {
 
 /* ==================== ШАПКА ==================== */
 header {
+  position: relative;
+  height: 100px;
   background-color: var(--color-bg-dark);
-  padding: 25px 0;
   border-bottom: 3px solid var(--color-gold);
-  box-shadow: 0 4px 8px rgba(255, 215, 0, 0.3);
-}
-
-.container {
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
   display: flex;
   align-items: center;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  gap: 20px;
+  padding: 0 20px;
 }
+
+.center-section {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  flex: none;
+}
+
 
 .right-section {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
   display: flex;
   align-items: center;
   gap: 20px;
+}
+
+/* ====================  АККАУНТ ==================== */
+.account-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.profile-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.account-text {
+  color: var(--color-gold);
+  font-weight: 600;
+  text-decoration: none;
+  transition: text-decoration 0.3s ease;
+}
+
+.account-text:hover {
+  text-decoration: underline;
+}
+
+.btn-login {
+  color: var(--color-white);
+  border: 1px solid var(--color-white);
+  padding: 6px 10px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-login:hover {
+  background-color: var(--color-white);
+  color: var(--color-bg-dark);
 }
 
 /* ==================== НАВИГАЦИЯ ==================== */
@@ -199,7 +252,8 @@ nav a:hover {
   border-radius: 8px;
   padding: 8px 15px;
   font-size: 1em;
-  width: 200px;
+  width: 600px;
+  max-width: 100%;
   transition: all 0.3s ease;
 }
 

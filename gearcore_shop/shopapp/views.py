@@ -1,6 +1,14 @@
-from django.shortcuts import render, get_object_or_404
+from pyexpat.errors import messages
+
+from django.shortcuts import render, get_object_or_404, redirect
+from django.core.mail import send_mail
+from django.http import HttpResponse
 from django.db.models import Q
 from .models import Product, Brand, Category
+from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
+
+from .forms import LoginForm
 
 
 # Create your views here.
@@ -42,3 +50,18 @@ def product_by_brand(request, brand_name):
         'brand': brand,
         'products': products
     })
+
+def login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            auth_login(request, user)
+            return redirect('/')
+    else:
+        form = LoginForm()
+    return render(request, 'account/login.html', {'form': form})
+
+def logout(request):
+    auth_logout(request)
+    return redirect('/')

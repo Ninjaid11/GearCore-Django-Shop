@@ -11,43 +11,53 @@
 </head>
 <body>
     <div class="wrapper">
+        {% load static %}
+
         <header>
-          <div class="container">
             <div class="logo">
               <h1><a href="/">GearCore</a></h1>
             </div>
 
-            <div class="right-section">
-                <div class="dropdown" id="catalog-dropdown">
-                  <button class="dropdown-btn">Каталог товаров ⯆</button>
-                  <div class="dropdown-content">
-                    <div class="dropdown-item">
-                      <span class="submenu-trigger">🎮 Товары для геймеров ⯈</span>
-                      <div class="submenu">
-                        {% for category in catalog_categories %}
-                          <div class="submenu-column">
-                            <strong>
-                              <a href="{% url 'products_by_category' category.name %}">{{ category.name }}</a>
-                            </strong>
-                            {% for brand in category.brands.all %}
-                              <a href="{% url 'product_by_brand' brand.name %}">{{ brand.name }}</a>
-                            {% endfor %}
-                          </div>
-                        {% endfor %}
-                      </div>
+            <div class="center-section">
+
+              <div class="dropdown" id="catalog-dropdown">
+                <button class="dropdown-btn">Каталог товаров ⯆</button>
+                <div class="dropdown-content">
+                  <div class="dropdown-item">
+                    <span class="submenu-trigger">🎮 Товары для геймеров ⯈</span>
+                    <div class="submenu">
+                      {% for category in catalog_categories %}
+                        <div class="submenu-column">
+                          <strong>
+                            <a href="{% url 'products_by_category' category.name %}">{{ category.name }}</a>
+                          </strong>
+                          {% for brand in category.brands.all %}
+                            <a href="{% url 'product_by_brand' brand.name %}">{{ brand.name }}</a>
+                          {% endfor %}
+                        </div>
+                      {% endfor %}
                     </div>
                   </div>
                 </div>
-                <nav>
-                  <a href="#">Корзина</a>
-                  <a href="#">Вход</a>
-                </nav>
-                <form action="{% url 'product_search' %}" method="get" class="search-form">
-                    <input name="q" type="text" placeholder="Поиск товаров..." value="{{ request.GET.q }}">
-                    <button type="submit" class="search-button">🔍</button>
-                </form>
               </div>
-          </div>
+
+              <form action="{% url 'product_search' %}" method="get" class="search-form">
+                <input name="q" type="text" placeholder="Поиск товаров..." value="{{ request.GET.q }}">
+                <button type="submit" class="search-button">🔍</button>
+              </form>
+            </div>
+
+            <div class="right-section">
+              {% if user.is_authenticated %}
+                <div class="account-info">
+                  <img src="{% static 'img/profile.png' %}" alt="Профиль" class="profile-icon">
+                  <a href="#" class="account-text">My Account</a>
+                </div>
+              {% else %}
+                <a href="{% url 'account_login' %}" class="btn-login">Войти</a>
+              {% endif %}
+            </div>
+
         </header>
 
 
