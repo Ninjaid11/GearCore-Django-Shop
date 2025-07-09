@@ -1,4 +1,3 @@
-from allauth.core.ratelimit import clear
 from django import forms
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
@@ -37,3 +36,27 @@ class LoginForm(forms.Form):
 
     def get_user(self):
         return self.user
+
+
+class RegisterForm(forms.Form):
+    username = forms.CharField(label='Имя пользователя', max_length=150)
+    email = forms.EmailField(label='Электронная почта')
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput)
+    confirm_password = forms.CharField(label='Повторите пароль', widget=forms.PasswordInput)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        confirm_password = cleaned_data.get('confirm_password')
+
+        if password and confirm_password and password != confirm_password:
+            raise forms.ValidationError('Пароли не совпадают')
+        return cleaned_data
+
+    def save(self):
+        user = User.objects.create_user(
+            username=self.cleaned_data['username'],
+            email=self.cleaned_data['email'],
+            password=self.cleaned_data['password']
+        )
+        return user

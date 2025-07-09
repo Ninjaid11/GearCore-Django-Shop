@@ -3,26 +3,32 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Вход по почте</title>
-  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <title>Вход</title>
+  <link rel="stylesheet" href="{% static 'css/auth.css' %}">
 </head>
 <body>
   <div class="auth-wrapper">
-    <form method="post" class="auth-form">
-      {% csrf_token %}
+    <form method="post">
       <h2>Вход</h2>
+      {% csrf_token %}
+      {{ form.non_field_errors }}
 
-      <div>
-        {{ form.email.label_tag }}
-        {{ form.email }}
-      </div>
+      {{ form.login.label_tag }}
+      {{ form.login }}
 
-      <div>
-        {{ form.password.label_tag }}
-        {{ form.password }}
-      </div>
+      {{ form.password.label_tag }}
+      {{ form.password }}
+
+      {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+      {% endif %}
 
       <button type="submit">Войти</button>
+
+      <div class="auth-link">
+        <a href="{% url 'account_reset_password' %}">Забыли пароль?</a><br>
+        <a href="{% url 'account_signup' %}">Нет аккаунта? Зарегистрируйтесь</a>
+      </div>
     </form>
   </div>
 </body>

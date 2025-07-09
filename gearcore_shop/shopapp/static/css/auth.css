@@ -1,0 +1,145 @@
+:root {
+  --color-gold: #FFD700;
+  --color-bg-dark: #000000;
+  --color-text: #FFD700;
+  --color-text-alt: #888;
+  --color-line: white;
+  --color-error: #FF4D4D;
+  --color-product-bg: #222;
+  --color-tag-bg: #333;
+  --color-highlight: #0f0;
+  --color-bg-darker: #111;
+  --color-white: #fff;
+  --color-border-dark: #444;
+  --color-placeholder: #aaa;
+  --color-bg-main: rgb(15, 17, 17);
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-bg-main);
+  color: var(--color-text);
+  font-family: 'Orbitron', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-wrapper {
+  width: 100%;
+  max-width: 420px;
+  background-color: var(--color-bg-darker);
+  padding: 40px 30px;
+  border-radius: 16px;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+  color: var(--color-text);
+  box-sizing: border-box;
+  /* Немного плавное появление */
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.auth-wrapper h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: var(--color-gold);
+  text-shadow: 0 0 12px var(--color-gold);
+  font-weight: 800;
+  letter-spacing: 2px;
+  font-size: 2em;
+}
+
+.auth-wrapper form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.auth-wrapper label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  user-select: none;
+}
+
+.auth-wrapper input[type="text"],
+.auth-wrapper input[type="email"],
+.auth-wrapper input[type="password"] {
+  background-color: var(--color-bg-main);
+  border: 2px solid var(--color-gold);
+  border-radius: 10px;
+  padding: 12px 18px;
+  color: var(--color-text);
+  font-size: 1.05em;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.auth-wrapper input::placeholder {
+  color: var(--color-placeholder);
+}
+
+.auth-wrapper input:focus {
+  outline: none;
+  border-color: #00bfff;
+  box-shadow: 0 0 14px #00bfff;
+}
+
+.auth-wrapper button[type="submit"] {
+  background-color: var(--color-gold);
+  border: none;
+  border-radius: 12px;
+  color: var(--color-bg-dark);
+  padding: 14px 25px;
+  font-weight: 900;
+  font-size: 1.15em;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
+}
+
+.auth-wrapper button[type="submit"]:hover {
+  background-color: #fff;
+  box-shadow: 0 0 20px var(--color-gold);
+}
+
+.auth-error {
+  color: var(--color-error);
+  font-weight: 600;
+  margin-top: -10px;
+  margin-bottom: 15px;
+  text-align: center;
+  background-color: rgba(255, 77, 77, 0.15);
+  border: 1px solid var(--color-error);
+  padding: 12px;
+  border-radius: 8px;
+  user-select: none;
+}
+
+/* Ссылка под формой */
+.auth-wrapper .auth-link {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 0.95em;
+}
+
+.auth-wrapper .auth-link a {
+  color: var(--color-gold);
+  font-weight: 700;
+  text-decoration: none;
+  transition: text-decoration 0.3s ease;
+  user-select: none;
+}
+
+.auth-wrapper .auth-link a:hover {
+  text-decoration: underline;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  } to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

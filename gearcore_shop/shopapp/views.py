@@ -1,5 +1,3 @@
-from pyexpat.errors import messages
-
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.mail import send_mail
 from django.http import HttpResponse
@@ -8,7 +6,7 @@ from .models import Product, Brand, Category
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 
-from .forms import LoginForm
+from .forms import LoginForm, RegisterForm
 
 
 # Create your views here.
@@ -61,6 +59,17 @@ def login(request):
     else:
         form = LoginForm()
     return render(request, 'account/login.html', {'form': form})
+
+def register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = RegisterForm()
+    return render(request, 'account/register.html', {'form': form})
+
 
 def logout(request):
     auth_logout(request)

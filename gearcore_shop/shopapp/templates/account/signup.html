@@ -1,10 +1,36 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <title>Регистрация</title>
+  <link rel="stylesheet" href="{% static 'css/auth.css' %}">
 </head>
 <body>
+  <div class="auth-wrapper">
+    <form method="post">
+      <h2>Регистрация</h2>
+      {% csrf_token %}
+      {{ form.non_field_errors }}
 
+      {{ form.username.label_tag }}
+      {{ form.username }}
+
+      {{ form.email.label_tag }}
+      {{ form.email }}
+
+      {{ form.password1.label_tag }}
+      {{ form.password1 }}
+
+      {{ form.password2.label_tag }}
+      {{ form.password2 }}
+
+      <button type="submit">Зарегистрироваться</button>
+
+      <div class="auth-link">
+        <a href="{% url 'account_login' %}">Уже есть аккаунт? Войти</a>
+      </div>
+    </form>
+  </div>
 </body>
 </html>

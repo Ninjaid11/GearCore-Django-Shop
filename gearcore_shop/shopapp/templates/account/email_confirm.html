@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Подтверждение почты</title>
+  <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+</head>
+<body>
+  <div class="auth-wrapper">
+    <div class="auth-form">
+      <h2>Подтверждение почты</h2>
+
+      {% if confirmation %}
+        <p>Привет, {{ confirmation.email_address.user.username }}!</p>
+        <p>Подтвердите email: <strong>{{ confirmation.email_address.email }}</strong></p>
+
+        <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+          {% csrf_token %}
+          <button type="submit">Подтвердить</button>
+        </form>
+      {% else %}
+        <p>Ошибка подтверждения. Ссылка недействительна или устарела.</p>
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>

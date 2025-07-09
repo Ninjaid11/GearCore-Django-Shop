@@ -1,10 +1,24 @@
+{% load i18n static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8" />
+  <title>{% trans "Выход из аккаунта" %}</title>
+  <link rel="stylesheet" href="{% static 'css/auth.css' %}" />
 </head>
 <body>
+  <div class="auth-wrapper">
+    <h2>{% trans "Выход из аккаунта" %}</h2>
+    <p>{% trans "Вы уверены, что хотите выйти?" %}</p>
 
+    <form method="post" action="{% url 'account_logout' %}">
+      {% csrf_token %}
+      <button type="submit">{% trans "Выйти" %}</button>
+    </form>
+
+    <p style="margin-top: 20px;">
+      <a href="{% url 'account_login' %}" class="auth-link">{% trans "Отмена" %}</a>
+    </p>
+  </div>
 </body>
 </html>
