@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib.auth import update_session_auth_hash
 
 from .models import Product, Brand, Category
 
@@ -55,7 +57,7 @@ def account_info(request):
 
 @login_required
 def address_book(request):
-    return render(request, 'profile/addresses_book.html')
+    return render(request, 'profile/address_book.html')
 
 @login_required
 def order_history(request):
@@ -64,3 +66,30 @@ def order_history(request):
 @login_required
 def my_returns(request):
     return render(request, 'profile/my_returns.html')
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        old_password = request.POST.get('old_password')
+        new_password1 = request.POST.get('new_password1')
+        new_password2 = request.POST.get('new_password1')
+
+        user = request.user
+
+        if not user.check_password(old_password):
+            return render(request, 'account/change_password.html', {'error': 'Старый пароль неверен'})
+
+        if new_password1 != new_password2:
+            return render(request, 'account/change_password.html', {'error': 'Пароли не совпадают'})
+
+        if len(new_password1) < 8:
+            return render(request, 'account/change_password.html', {'error': 'Пароль слишком короткий'})
+
+        user.set_password(new_password1)
+        user.save()
+
+        update_session_auth_hash(request, user)
+
+        return render(request, 'account/change_password.html', {'success': True})
+
+    return render(request, 'account/change_password.html')

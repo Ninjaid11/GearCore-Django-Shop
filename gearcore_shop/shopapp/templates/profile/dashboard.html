@@ -2,6 +2,7 @@
 
 {% block content %}
   <h1>Account Dashboard</h1>
+  <h1>My Account</h1>
   <nav>
     <ul>
       <li><a href="{% url 'account_info' %}">Account Information</a></li>
@@ -16,7 +17,7 @@
   <h1 class="dashboard-title">My Dashboard</h1>
 
   <p class="dashboard-subtitle">
-    Hello {{ user.first_name }} {{ user.last_name }},
+    Hello {{ user.username }},
   </p>
 
   <p class="dashboard-text">
@@ -27,7 +28,7 @@
   <section class="dashboard-section">
     <h2>Account Information</h2>
     <p><strong>Contact Information</strong></p>
-    <p>{{ user.first_name }} {{ user.last_name }}</p>
+    <p>{{ user.username }}</p>
     <p>{{ user.email }}</p>
     <a href="{% url 'account_info' %}" class="dashboard-link">Edit</a>
   </section>

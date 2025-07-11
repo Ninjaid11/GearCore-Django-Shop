@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
 
-</body>
-</html>
+{% block content %}
+  <h1>My Account</h1>
+  <nav>
+    <ul>
+      <li><a href="{% url 'account_info' %}">Account Information</a></li>
+      <li><a href="{% url 'address_book' %}">Addresses</a></li>
+      <li><a href="{% url 'order_history' %}">Orders</a></li>
+      <li><a href="{% url 'my_returns' %}">Returns</a></li>
+    </ul>
+  </nav>
+{% endblock %}

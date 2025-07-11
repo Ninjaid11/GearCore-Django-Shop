@@ -3,18 +3,19 @@
 {% block content %}
   <div class="account-page">
     <div class="account-sidebar">
-      <h3>Мой аккаунт</h3>
-      <ul>
-        <a href="{% url 'account_info' %}">Account Information</a>
-        <a href="{% url 'address_book' %}">Addresses</a>
-        <a href="{% url 'order_history' %}">Orders</a>
-        <a href="{% url 'my_returns' %}">My Returns</a>
-      </ul>
-    </div>
+     <h1>My Account</h1>
+      <nav>
+        <ul>
+          <li><a href="{% url 'account_info' %}">Account Information</a></li>
+          <li><a href="{% url 'address_book' %}">Addresses</a></li>
+          <li><a href="{% url 'order_history' %}">Orders</a></li>
+          <li><a href="{% url 'my_returns' %}">Returns</a></li>
+        </ul>
+      </nav>
 
     <div class="account-content">
       <h2>Account Information</h2>
-      <p>Здесь можно изменить имя, фамилию и пароль</p>
+      <p>Здесь можно изменить имя, почту и пароль</p>
 
       <form method="post">
         {% csrf_token %}
