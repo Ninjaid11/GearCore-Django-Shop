@@ -51,7 +51,7 @@
               {% if user.is_authenticated %}
                 <div class="account-info">
                   <img src="{% static 'img/profile.png' %}" alt="Профиль" class="profile-icon">
-                  <a href="profile" class="account-text">My Account</a>
+                  <a href="/profile/" class="account-text">My Account</a>
                 </div>
               {% else %}
                 <a href="{% url 'account_login' %}" class="btn-login">Войти</a>
