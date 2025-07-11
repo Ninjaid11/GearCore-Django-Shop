@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Account Dashboard</h1>
+  <nav>
+    <ul>
+      <li><a href="{% url 'account_info' %}">Account Information</a></li>
+      <li><a href="{% url 'address_book' %}">Addresses</a></li>
+      <li><a href="{% url 'order_history' %}">Orders</a></li>
+      <li><a href="{% url 'my_returns' %}">Returns</a></li>
+    </ul>
+  </nav>
+
+  <div class="dashboard-container">
+
+  <h1 class="dashboard-title">My Dashboard</h1>
+
+  <p class="dashboard-subtitle">
+    Hello {{ user.first_name }} {{ user.last_name }},
+  </p>
+
+  <p class="dashboard-text">
+    From your My Account Dashboard you have the ability to view a snapshot of your recent account activity and update your account information.
+    Select a link below to view or edit information.
+  </p>
+
+  <section class="dashboard-section">
+    <h2>Account Information</h2>
+    <p><strong>Contact Information</strong></p>
+    <p>{{ user.first_name }} {{ user.last_name }}</p>
+    <p>{{ user.email }}</p>
+    <a href="{% url 'account_info' %}" class="dashboard-link">Edit</a>
+  </section>
+
+  <section class="dashboard-section">
+    <h2>Address Book</h2>
+    <p>No Saved Address Found</p>
+    <a href="{% url 'address_book' %}" class="dashboard-link">Manage Address</a>
+  </section>
+
+</div>
+{% endblock %}

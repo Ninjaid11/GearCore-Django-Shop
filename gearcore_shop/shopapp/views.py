@@ -1,12 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.core.mail import send_mail
-from django.http import HttpResponse
 from django.db.models import Q
-from .models import Product, Brand, Category
-from django.contrib.auth import login as auth_login
-from django.contrib.auth import logout as auth_logout
+from django.contrib.auth.decorators import login_required
 
-from .forms import LoginForm, RegisterForm
+from .models import Product, Brand, Category
 
 
 # Create your views here.
@@ -49,28 +45,22 @@ def product_by_brand(request, brand_name):
         'products': products
     })
 
-def login(request):
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            auth_login(request, user)
-            return redirect('/')
-    else:
-        form = LoginForm()
-    return render(request, 'account/login.html', {'form': form})
+@login_required
+def account_dashboard(request):
+    return render(request, 'profile/dashboard.html')
 
-def register(request):
-    if request.method == 'POST':
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('login')
-    else:
-        form = RegisterForm()
-    return render(request, 'account/register.html', {'form': form})
+@login_required
+def account_info(request):
+    return render(request, 'profile/account_info.html')
 
+@login_required
+def address_book(request):
+    return render(request, 'profile/addresses_book.html')
 
-def logout(request):
-    auth_logout(request)
-    return redirect('/')
+@login_required
+def order_history(request):
+    return render(request, 'profile/orders_history.html')
+
+@login_required
+def my_returns(request):
+    return render(request, 'profile/my_returns.html')
