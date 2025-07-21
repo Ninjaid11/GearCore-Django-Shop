@@ -1,39 +1,44 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
 
 {% block content %}
-  <div class="account-page">
-    <div class="account-sidebar">
-     <h1>My Account</h1>
-      <nav>
-        <ul>
-          <li><a href="{% url 'account_info' %}">Account Information</a></li>
-          <li><a href="{% url 'address_book' %}">Addresses</a></li>
-          <li><a href="{% url 'order_history' %}">Orders</a></li>
-          <li><a href="{% url 'my_returns' %}">Returns</a></li>
-        </ul>
-      </nav>
+  <div class="dashboard-container">
 
-    <div class="account-content">
-      <h2>Account Information</h2>
-      <p>Здесь можно изменить имя, почту и пароль</p>
+  <h1 class="dashboard-title">Account Information</h1>
+  <p class="dashboard-subtitle">Manage your name, email, and password</p>
 
-      <form method="post">
-        {% csrf_token %}
-        {{ form.non_field_errors }}
+  <nav class="dashboard-nav">
+    <ul>
+      <li><a href="/profile/">Account Dashboard</a></li>
+      <li><a href="{% url 'account_info' %}">Account Information</a></li>
+      <li><a href="{% url 'address_book' %}">Address Book</a></li>
+      <li><a href="{% url 'order_history' %}">Orders</a></li>
+      <li><a href="{% url 'my_returns' %}">Returns</a></li>
+      <li><a href="{% url 'account_logout' %}" class="logout-link">Logout</a></li>
+    </ul>
+  </nav>
 
-        <label for="first_name">Имя:</label>
-        <input type="text" name="first_name" id="first_name" value="{{ user.first_name }}">
+  {% if request.GET.success == 'true' %}
+    <div class="dashboard-message">✔ Профиль обновлён успешно</div>
+  {% endif %}
 
-        <label for="last_name">Фамилия:</label>
-        <input type="text" name="last_name" id="last_name" value="{{ user.last_name }}">
+  <section class="dashboard-section">
+    <h2>Update Contact Information</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Save Changes</button>
+    </form>
+  </section>
 
-        <button type="submit">Сохранить изменения</button>
-      </form>
+  <section class="dashboard-section">
+    <h2>Change Password</h2>
+    <a href="{% url 'change_password' %}" class="dashboard-link">Change your password</a>
+  </section>
 
-      <hr>
-
-      <h3>Изменить пароль</h3>
-      <a href="{% url 'account_change_password' %}" class="btn-login">Сменить пароль</a>
-    </div>
-  </div>
+</div>
 {% endblock %}

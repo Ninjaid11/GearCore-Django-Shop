@@ -1,0 +1,203 @@
+/* ==================== ПЕРЕМЕННЫЕ (ЦВЕТА) ==================== */
+:root {
+  --color-gold: #FFD700;
+  --color-bg-dark: #000000;
+  --color-text: #FFD700;
+  --color-text-alt: #888;
+  --color-line: white;
+  --color-error: #FF4D4D;
+  --color-product-bg: #222;
+  --color-tag-bg: #333;
+  --color-highlight: #0f0;
+  --color-bg-darker: #111;
+  --color-white: #fff;
+  --color-border-dark: #444;
+  --color-placeholder: #aaa;
+  --color-bg-main: rgb(15, 17, 17);
+}
+
+/* ==================== ОСНОВНОЙ КОНТЕЙНЕР ==================== */
+.product-detail {
+  max-width: 900px;
+  margin: 40px auto;
+  background-color: var(--color-bg-darker);
+  border-radius: 12px;
+  padding: 30px 30px 40px;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+  border: 2px solid var(--color-border-dark);
+  animation: fadeInUp 0.6s ease both;
+  color: var(--color-white);
+}
+
+/* ==================== ЗАГОЛОВКИ ==================== */
+.product-detail h1 {
+  font-size: 2.8em;
+  font-weight: 900;
+  color: var(--color-gold);
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px var(--color-gold);
+}
+
+.product-detail h2 {
+  color: var(--color-gold);
+  margin-top: 40px;
+  margin-bottom: 15px;
+  font-size: 1.8em;
+}
+
+/* ==================== ИЗОБРАЖЕНИЕ ==================== */
+
+.product-detail img {
+  max-width: 350px;
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 25px;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ==================== ПАРАГРАФЫ ==================== */
+.product-detail p {
+  font-size: 1.1em;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.product-detail strong {
+  color: var(--color-gold);
+}
+
+/* ==================== ТЕГИ ==================== */
+.product-detail .tags {
+  margin-top: 15px;
+}
+
+.product-detail .tags span {
+  background-color: var(--color-tag-bg);
+  color: var(--color-gold);
+  padding: 6px 12px;
+  margin-right: 8px;
+  border-radius: 6px;
+  font-size: 0.95em;
+  user-select: none;
+  display: inline-block;
+  cursor: default;
+}
+
+/* ==================== КОММЕНТАРИИ ==================== */
+.product-detail ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.product-detail li {
+  background-color: var(--color-product-bg);
+  border: 1px solid var(--color-border-dark);
+  border-radius: 8px;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.05);
+}
+
+.product-detail li strong {
+  color: var(--color-gold);
+}
+
+.product-detail li p {
+  color: var(--color-white);
+  margin-top: 8px;
+  white-space: pre-wrap;
+}
+/* ==================== ФОРМА КОММЕНТАРИЯ ==================== */
+.product-detail form {
+  background-color: var(--color-product-bg);
+  border: 1px solid var(--color-border-dark);
+  padding: 25px;
+  border-radius: 10px;
+  margin-top: 40px;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.1);
+}
+
+.product-detail form h3 {
+  color: var(--color-gold);
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.product-detail form textarea:focus,
+.product-detail form input[type="text"]:focus,
+.product-detail form input[type="email"]:focus {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  background-color: var(--color-bg-darker);
+  border: 2px solid var(--color-gold);
+  border-radius: 8px;
+  color: var(--color-white);
+  font-size: 1em;
+  resize: vertical;
+  border-color: var(--color-highlight);
+  outline: none;
+  box-shadow: 0 0 8px var(--color-highlight);
+}
+
+.product-detail form button {
+  background-color: var(--color-gold);
+  border: none;
+  padding: 12px 25px;
+  color: #000;
+  font-weight: 800;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.product-detail form button:hover {
+  background-color: #fff;
+  box-shadow: 0 0 15px var(--color-gold);
+}
+
+.product-detail form .comment-textarea {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  background-color: var(--color-bg-darker);
+  border: 2px solid var(--color-gold);
+  border-radius: 8px;
+  color: var(--color-white);
+  font-size: 1em;
+  resize: vertical;
+}
+
+.product-detail form .comment-textarea:focus {
+  border-color: var(--color-highlight);
+  outline: none;
+  box-shadow: 0 0 8px var(--color-highlight);
+}
+
+/* ==================== ССЫЛКИ ==================== */
+.product-detail a {
+  color: var(--color-gold);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.product-detail a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* ==================== АНИМАЦИЯ ==================== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

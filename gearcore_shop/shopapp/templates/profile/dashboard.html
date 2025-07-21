@@ -1,20 +1,25 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
 
 {% block content %}
-  <h1>Account Dashboard</h1>
-  <h1>My Account</h1>
-  <nav>
+<div class="dashboard-container">
+
+  <h1 class="dashboard-title">My Account</h1>
+
+  <nav class="dashboard-nav">
     <ul>
+      <li><a href="/profile">Account Dashboard</a></li>
       <li><a href="{% url 'account_info' %}">Account Information</a></li>
-      <li><a href="{% url 'address_book' %}">Addresses</a></li>
+      <li><a href="{% url 'address_book' %}">Address Book</a></li>
       <li><a href="{% url 'order_history' %}">Orders</a></li>
       <li><a href="{% url 'my_returns' %}">Returns</a></li>
+      <li><a href="{% url 'account_logout' %}" class="logout-link">Logout</a></li>
     </ul>
   </nav>
-
-  <div class="dashboard-container">
-
-  <h1 class="dashboard-title">My Dashboard</h1>
 
   <p class="dashboard-subtitle">
     Hello {{ user.username }},
@@ -27,7 +32,7 @@
 
   <section class="dashboard-section">
     <h2>Account Information</h2>
-    <p><strong>Contact Information</strong></p>
+    <p><strong>Contact Information:</strong></p>
     <p>{{ user.username }}</p>
     <p>{{ user.email }}</p>
     <a href="{% url 'account_info' %}" class="dashboard-link">Edit</a>

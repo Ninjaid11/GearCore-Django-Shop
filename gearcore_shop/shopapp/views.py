@@ -4,7 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import update_session_auth_hash
 
-from .models import Product, Brand, Category
+from .models import Product, Brand, Category, Comment
+from  .forms import UserUpdateFrom, CommentForm
 
 
 # Create your views here.
@@ -17,6 +18,32 @@ def index(request):
         'brands': brand
     })
 
+def product_detail(request, product_name):
+    product = get_object_or_404(Product, name__iexact=product_name)
+    comments = Comment.objects.filter(product=product)
+
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            new_comment = Comment(
+                user=request.user,
+                product=product,
+                content=comment_form.cleaned_data["content"]
+            )
+            new_comment.save()
+            return redirect('product_detail', product_name=product.name)
+    else:
+        comment_form = CommentForm()
+
+    return render(request, 'product_detail.html', {
+        'product': product,
+        'comments': comments,
+        'comment_form': comment_form
+    })
+
+
+
+
 def product_search(request):
     query = request.GET.get('q', '')
     if query:
@@ -24,7 +51,7 @@ def product_search(request):
             Q(name__icontains=query) |
             Q(category__name__icontains=query) |
             Q(tags__name__icontains=query)
-        ).distinct()
+        ).distinct() # чтобы избежать дубликатов
     else:
         error = "Пожалуйста, введите поисковый запрос."
         return render(request, "search.html", {'error': error})
@@ -53,7 +80,15 @@ def account_dashboard(request):
 
 @login_required
 def account_info(request):
-    return render(request, 'profile/account_info.html')
+    if request.method == 'POST':
+        form = UserUpdateFrom(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('/profile/account-info/?success=true')
+    else:
+        form = UserUpdateFrom(instance=request.user)
+
+    return render(request, 'profile/account_info.html', {'form': form})
 
 @login_required
 def address_book(request):

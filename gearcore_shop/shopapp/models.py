@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -11,7 +12,6 @@ class Product(models.Model):
     brand = models.ForeignKey('Brand', on_delete=models.CASCADE)
     category = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True)
     is_top = models.BooleanField(default=False)
-    rating = models.FloatField(default=0)
     tags = models.ManyToManyField('Tag', blank=True)
 
     def __str__(self):
@@ -36,3 +36,10 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
