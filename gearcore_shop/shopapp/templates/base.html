@@ -20,24 +20,30 @@
             <div class="center-section">
 
               <div class="dropdown" id="catalog-dropdown">
-                <button class="dropdown-btn">Каталог товаров ⯆</button>
-                <div class="dropdown-content">
-                  <div class="dropdown-item">
-                    <span class="submenu-trigger">🎮 Товары для геймеров ⯈</span>
-                    <div class="submenu">
-                      {% for category in catalog_categories %}
-                        <div class="submenu-column">
-                          <strong>
-                            <a href="{% url 'products_by_category' category.name %}">{{ category.name }}</a>
-                          </strong>
-                          {% for brand in category.brands.all %}
-                            <a href="{% url 'product_by_brand' brand.name %}">{{ brand.name }}</a>
-                          {% endfor %}
-                        </div>
-                      {% endfor %}
+                  <button class="dropdown-btn">Каталог товаров ⯆</button>
+                  <div class="dropdown-content">
+                    <div class="dropdown-item">
+                      <span class="submenu-trigger">🎮 Товары для геймеров ⯈</span>
+                      <div class="submenu">
+                        {% for category in catalog_categories %}
+                          <div class="submenu-column">
+                            <strong class="category-title">
+                              <a href="{% url 'products_by_category' category.name %}">
+                                🗂 {{ category.name }}
+                              </a>
+                            </strong>
+                            <ul class="brand-list">
+                              {% for brand in category.brands.all %}
+                                <li>
+                                  <a href="{% url 'product_by_brand' brand.name %}">• {{ brand.name }}</a>
+                                </li>
+                              {% endfor %}
+                            </ul>
+                          </div>
+                        {% endfor %}
+                      </div>
                     </div>
                   </div>
-                </div>
               </div>
 
               <form action="{% url 'product_search' %}" method="get" class="search-form">
@@ -53,7 +59,10 @@
                   <a href="/profile/" class="account-text">My Account</a>
                 </div>
               {% else %}
-                <a href="{% url 'account_login' %}" class="btn-login">Войти</a>
+                <div class="guest-info">
+                    <a href="{% url 'account_login' %}"><img src="{% static 'img/enter.png' %}" alt="Гость" class="enter-icon"></a>
+                    <a href="{% url 'account_login' %}" class="guest-text">Войти в аккаунт</a>
+                </div>
               {% endif %}
             </div>
 

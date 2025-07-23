@@ -2,7 +2,10 @@
 {% load static %}
 
 {% block content %}
-<h2>Категория: {{ category.name }}</h2>
+<div class="line-with-text">
+  <h2>{{ category.name }}</h2>
+  <div class="line"></div>
+</div>
 
 <div class="products">
   {% for product in products %}

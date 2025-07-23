@@ -29,7 +29,11 @@
   {% endfor %}
 </div>
 
-<h2 id="product-title">Наши продукты</h2>
+<div class="line-with-text">
+    <h2 id="product-title">Наши продукты</h2>
+    <div class="line"></div>
+</div>
+
 <div class="products">
     {% for product in products %}
     <div class="product-card">
@@ -42,7 +46,7 @@
             <span class="tag">{{ tag.name }}</span>
             {% endfor %}
         </div>
-        <a href="#">🛒 Корзина</a>
+        <a href="{% url 'add_to_cart' product.id %}">🛒 Корзина</a>
         <a href="{% url 'product_detail' product.name %}">Подробние</a>
     </div>
     {% endfor %}

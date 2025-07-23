@@ -122,18 +122,30 @@ header {
   text-decoration: underline;
 }
 
-.btn-login {
-  color: var(--color-white);
-  border: 1px solid var(--color-white);
-  padding: 6px 10px;
-  border-radius: 4px;
-  text-decoration: none;
-  transition: all 0.3s ease;
+.guest-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
 }
 
-.btn-login:hover {
-  background-color: var(--color-white);
-  color: var(--color-bg-dark);
+.enter-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.guest-text {
+  color: var(--color-gold);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: text-decoration 0.3s ease;
+}
+
+.guest-text:hover {
+  text-decoration: underline;
 }
 
 /* ==================== НАВИГАЦИЯ ==================== */
@@ -160,6 +172,7 @@ nav a:hover {
 /* ==================== КАТАЛОГ ==================== */
 .dropdown {
   position: relative;
+  z-index: 1000;
 }
 
 .dropdown-btn {
@@ -176,21 +189,21 @@ nav a:hover {
 .dropdown-btn:hover {
   background-color: var(--color-gold);
   color: var(--color-bg-dark);
-  box-shadow: 0 0 15px var(--color-gold);
+  box-shadow: 0 0 12px var(--color-gold);
 }
 
 .dropdown-content {
   position: absolute;
-  top: 100%;
+  top: 110%;
   left: 0;
   background: var(--color-bg-darker);
   border: 2px solid var(--color-gold);
-  border-radius: 10px;
-  min-width: 280px;
+  border-radius: 12px;
+  min-width: 320px;
   display: none;
   flex-direction: column;
-  padding: 15px;
-  z-index: 1000;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
   animation: fadeIn 0.3s ease-in-out;
 }
 
@@ -199,23 +212,33 @@ nav a:hover {
 }
 
 .dropdown-item {
-  margin-bottom: 10px;
+  margin-bottom: 16px;
 }
 
 .submenu-trigger {
   color: var(--color-gold);
-  cursor: pointer;
   font-weight: bold;
-  margin-bottom: 8px;
-  display: inline-block;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s ease-in-out;
+}
+
+.submenu-trigger:hover {
+  color: #0ff;
 }
 
 .submenu {
   display: none;
-  flex-direction: column;
-  padding: 10px 0 0 15px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 10px 0 0 10px;
   border-left: 2px solid var(--color-gold);
-  margin-top: 5px;
+  margin-top: 10px;
   animation: fadeInSubmenu 0.3s ease-in-out;
 }
 
@@ -224,14 +247,22 @@ nav a:hover {
 }
 
 .submenu-column {
-  margin-bottom: 10px;
+  min-width: 140px;
+  display: flex;
+  flex-direction: column;
+}
+
+.submenu-column strong a {
+  color: var(--color-gold);
+  font-size: 1.05em;
+  margin-bottom: 4px;
+  display: inline-block;
 }
 
 .submenu-column a {
   color: #0ff;
   text-decoration: none;
-  padding: 2px 0;
-  display: block;
+  padding: 3px 0;
   transition: color 0.2s ease-in-out;
 }
 
@@ -544,13 +575,25 @@ footer {
 
 /* ==================== АНИМАЦИИ ==================== */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes fadeInSubmenu {
-  from { opacity: 0; transform: translateX(-10px); }
-  to   { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @keyframes fadeInUp {

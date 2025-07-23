@@ -6,7 +6,7 @@ from .models import Product, Brand, Category, Tag, Comment
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'price', 'in_stock', 'brand', 'category', 'is_top')
+    list_display = ('id', 'name', 'price', 'in_stock', 'brand', 'category', 'is_top')
     list_filter = ('brand', 'category', 'is_top', 'in_stock')
     search_fields = ('name', 'description')
 

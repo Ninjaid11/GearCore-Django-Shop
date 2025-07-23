@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import update_session_auth_hash
 
-from .models import Product, Brand, Category, Comment
+from .models import Product, Brand, Category, Comment, CartItem
 from  .forms import UserUpdateFrom, CommentForm
 
 
@@ -40,9 +40,47 @@ def product_detail(request, product_name):
         'comments': comments,
         'comment_form': comment_form
     })
+@login_required
+def add_to_cart(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    cart_item, created = CartItem.objects.get_or_create(user=request.user, product=product)
+    if not created:
+        cart_item.count += 1
+    cart_item.save()
+    return redirect('cart_detail')
 
+def cart_detail(request):
+    cart_items = CartItem.objects.filter(user=request.user)
+    total_price = 0
+    for item in cart_items:
+        total_price += item.product.price * item.count
+    return render(request, 'cart_item.html', {
+        'cart_items': cart_items,
+        'total_price': total_price
+    })
 
+@login_required
+def cart_plus(request, item_id):
+    item = get_object_or_404(CartItem, id=item_id, user=request.user)
+    item.count += 1
+    item.save()
+    return redirect('cart_detail')
 
+@login_required
+def cart_minus(request, item_id):
+    item = get_object_or_404(CartItem, id=item_id, user=request.user)
+    if item.count > 1:
+        item.count -= 1
+        item.save()
+    else:
+        item.delete()
+    return redirect('cart_detail')
+
+@login_required
+def cart_remove(request, item_id):
+    item = get_object_or_404(CartItem, id=item_id, user=request.user)
+    item.delete()
+    return redirect('cart_detail')
 
 def product_search(request):
     query = request.GET.get('q', '')

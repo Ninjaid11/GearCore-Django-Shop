@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models import ForeignKey
+
 
 # Create your models here.
 
@@ -43,3 +45,16 @@ class Comment(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+class CartItem(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    session_key = models.CharField(max_length=40, null=True, blank=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    count = models.PositiveIntegerField(default=1)
+    added_at = models.DateTimeField(auto_now_add=True)
+
+    def total_price(self):
+        return self.product.price * self.count
+
+    def __str__(self):
+        return f"{self.product.name} x{self.count} = ${self.product.price}"

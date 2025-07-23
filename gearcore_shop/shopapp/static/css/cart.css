@@ -1,0 +1,135 @@
+.cart-container {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: var(--color-bg-darker);
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  color: var(--color-gold);
+}
+
+.cart-container h2 {
+  margin-bottom: 20px;
+  font-size: 2em;
+  text-align: center;
+}
+
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.cart-table th, .cart-table td {
+  padding: 12px 15px;
+  border: 1px solid var(--color-border-dark);
+  text-align: center;
+  vertical-align: middle;
+}
+
+.cart-table th {
+  background-color: var(--color-bg-main);
+  color: var(--color-gold);
+}
+
+.btn-remove, .btn-checkout, .btn-back {
+  background-color: var(--color-gold);
+  color: var(--color-bg-dark);
+  min-width: 100px;
+  border: none;
+  padding: 10px 18px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-remove:hover, .btn-checkout:hover, .btn-back:hover {
+  background-color: var(--color-bg-dark);
+  color: var(--color-gold);
+  border: 2px solid var(--color-gold);
+}
+
+.product-image-cell img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 5px;
+  display: block;
+  margin: 0 auto;
+}
+
+.qty-form {
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.quantity-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 110px;
+}
+
+.qty-btn {
+  background-color: var(--color-gold);
+  color: var(--color-bg-dark);
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 18px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.qty-btn:hover {
+  background-color: var(--color-bg-dark);
+  color: var(--color-gold);
+  border: 2px solid var(--color-gold);
+}
+
+.remove-form {
+  display: inline-block;
+}
+
+.empty-cart-message {
+  text-align: center;
+  margin: 40px 0;
+  color: var(--color-error);
+}
+
+.empty-cart-message p {
+  font-size: 1.3em;
+  font-weight: 700;
+  margin-bottom: 20px;
+  background-color: rgba(255, 77, 77, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid var(--color-error);
+  box-shadow: 0 0 15px rgba(255, 77, 77, 0.3);
+}
+
+.empty-cart-message .btn-back {
+  background-color: var(--color-gold);
+  color: var(--color-bg-dark);
+  border: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: inline-block;
+}
+
+.empty-cart-message .btn-back:hover {
+  background-color: var(--color-bg-dark);
+  color: var(--color-gold);
+  border: 2px solid var(--color-gold);
+}
