@@ -133,3 +133,30 @@
   color: var(--color-gold);
   border: 2px solid var(--color-gold);
 }
+
+.cart-actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 15px;
+}
+
+.btn-continue {
+  background-color: var(--color-bg-main);
+  color: var(--color-gold);
+  border: 2px solid var(--color-gold);
+  padding: 10px 25px;
+  border-radius: 8px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: inline-block;
+}
+
+.btn-continue:hover,
+.btn-continue:focus {
+  background-color: var(--color-gold);
+  color: var(--color-bg-dark);
+  outline: none;
+}

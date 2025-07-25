@@ -31,10 +31,14 @@
       {% endfor %}
     </p>
 
-    <form method="post" action="{% url 'add_to_cart' product.id %}" class="buy-form">
-      {% csrf_token %}
-      <button type="submit" class="btn-buy">Купить</button>
-    </form>
+    <div class="purchase-container">
+      <p class="product-price">Цена: ${{ product.price }}</p>
+      <form method="post" action="{% url 'add_to_cart' product.id %}" class="buy-form">
+        {% csrf_token %}
+        <button type="submit" class="btn-buy">Купить</button>
+      </form>
+    </div>
+
 
     <hr>
 

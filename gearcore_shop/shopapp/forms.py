@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 
-from .models import Comment
+from .models import Comment, Order
 
 class LoginForm(forms.Form):
     email = forms.EmailField(
@@ -87,4 +87,21 @@ class CommentForm(forms.ModelForm):
                 'class': 'comment-textarea',
                 'placeholder': 'Напишите комментарий...'
             }),
+        }
+
+class OrderForm(forms.ModelForm):
+    delivery_day = forms.DateField(
+        widget= forms.DateInput(attrs={'type': 'date'}),
+        label="День доставки"
+    )
+
+    class Meta:
+        model = Order
+        fields = ['first_name', 'last_name', 'phone', 'email', 'delivery_day', 'details']
+        widget = {
+            'first_name': forms.TextInput(attrs={'placeholder': 'Имя'}),
+            'last_name': forms.TextInput(attrs={'placeholder': 'Фамилия'}),
+            'phone': forms.TextInput(attrs={'placeholder': 'Телефон'}),
+            'email': forms.EmailInput(attrs={'placeholder': 'Email'}),
+            'details': forms.Textarea(attrs={'placeholder': 'Комментарий к заказу', 'rows': 4}),
         }

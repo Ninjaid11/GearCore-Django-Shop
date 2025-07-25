@@ -88,34 +88,48 @@
 
 /* ==================== ПОКУПКА ==================== */
 
+.purchase-container {
+  background-color: var(--color-product-bg); /* темно-серый фон */
+  border-radius: 12px;
+  padding: 25px 30px;
+  margin: 30px auto; /* по центру с отступами сверху/снизу */
+  text-align: center;
+}
+
+.product-price {
+  font-size: 1.6em;
+  font-weight: 700;
+  color: var(--color-highlight);
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px var(--color-highlight);
+}
+
 .btn-buy {
   background-color: var(--color-gold);
-  color: var(--color-bg-dark);
-  padding: 12px 30px;
+  color: #000;
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1.1em;
+  padding: 12px 30px;
   border: none;
-  border-radius: 12px;
+  border-radius: 8px;
   cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  box-shadow: 0 0 15px var(--color-gold);
-  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
   user-select: none;
   display: inline-block;
 }
 
 .btn-buy:hover,
 .btn-buy:focus {
-  background-color: #e6c200; /* чуть темнее */
-  color: var(--color-bg-dark);
-  box-shadow: 0 0 25px var(--color-gold);
+  background-color: #fff;
+  box-shadow: 0 0 15px var(--color-gold);
+  color: var(--color-gold);
   outline: none;
 }
 
 .btn-buy:active {
-  transform: scale(0.95);
-  box-shadow: 0 0 10px var(--color-gold);
+  background-color: #e6c200;
+  box-shadow: 0 0 8px #c9a400 inset;
 }
 
 /* ==================== КОММЕНТАРИИ ==================== */
