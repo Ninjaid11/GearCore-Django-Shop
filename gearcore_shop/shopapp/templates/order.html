@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Оформление заказа</h2>
+
+    <form method="POST" novalidate>
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <div class="mb-3">
+            {{ form.first_name.label_tag }}
+            {{ form.first_name }}
+            {{ form.first_name.errors }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.last_name.label_tag }}
+            {{ form.last_name }}
+            {{ form.last_name.errors }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.email.label_tag }}
+            {{ form.email }}
+            {{ form.email.errors }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.phone.label_tag }}
+            {{ form.phone }}
+            {{ form.phone.errors }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.delivery_day.label_tag }}
+            {{ form.delivery_day }}
+            {{ form.delivery_day.errors }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.details.label_tag }}
+            {{ form.details }}
+            {{ form.details.errors }}
+        </div>
+
+        <button type="submit" class="btn btn-success">Подтвердить заказ</button>
+    </form>
+</div>
+{% endblock %}

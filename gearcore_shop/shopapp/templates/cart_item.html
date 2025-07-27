@@ -33,23 +33,44 @@
             </td>
             <td>{{ item.product.name }}</td>
             <td class="quantity-cell">
-              <form action="{% url 'cart_minus' item.id %}" method="post" class="qty-form">
-                {% csrf_token %}
-                <button type="submit" class="qty-btn">−</button>
-              </form>
+              {% if user.is_authenticated %}
+                <form action="{% url 'cart_minus' item.id %}" method="post" class="qty-form">
+                  {% csrf_token %}
+                  <button type="submit" class="qty-btn">−</button>
+                </form>
+              {% else %}
+                <form action="{% url 'cart_minus' item.product.id %}" method="post" class="qty-form">
+                  {% csrf_token %}
+                  <button type="submit" class="qty-btn">−</button>
+                </form>
+              {% endif %}
               <span class="quantity">{{ item.count }}</span>
-              <form action="{% url 'cart_plus' item.id %}" method="post" class="qty-form">
-                {% csrf_token %}
-                <button type="submit" class="qty-btn">+</button>
-              </form>
+              {% if user.is_authenticated %}
+                <form action="{% url 'cart_plus' item.id %}" method="post" class="qty-form">
+                  {% csrf_token %}
+                  <button type="submit" class="qty-btn">+</button>
+                </form>
+              {% else %}
+                <form action="{% url 'cart_plus' item.product.id %}" method="post" class="qty-form">
+                  {% csrf_token %}
+                  <button type="submit" class="qty-btn">+</button>
+                </form>
+              {% endif %}
             </td>
             <td>${{ item.product.price|floatformat:2 }}</td>
             <td>${{ item.total_price|floatformat:2 }}</td>
             <td>
-              <form action="{% url 'cart_remove' item.id %}" method="post" class="remove-form">
-                {% csrf_token %}
-                <button type="submit" class="btn-remove">Удалить</button>
-              </form>
+              {% if user.is_authenticated %}
+                <form action="{% url 'cart_remove' item.id %}" method="post" class="remove-form">
+                  {% csrf_token %}
+                  <button type="submit" class="btn-remove">Удалить</button>
+                </form>
+              {% else %}
+                <form action="{% url 'cart_remove' item.product.id %}" method="post" class="remove-form">
+                  {% csrf_token %}
+                  <button type="submit" class="btn-remove">Удалить</button>
+                </form>
+              {% endif %}
             </td>
           </tr>
         {% endfor %}
@@ -60,7 +81,7 @@
       <p><strong>Общая сумма: </strong> ${{ total_price|floatformat:2 }}</p>
       <div class="cart-actions">
         <a href="/" class="btn-continue">Продолжить покупки</a>
-        <a href="#" class="btn-checkout">Перейти к оформлению</a>
+        <a href="{% url 'order' %}" class="btn-checkout">Перейти к оформлению</a>
       </div>
     </div>
 

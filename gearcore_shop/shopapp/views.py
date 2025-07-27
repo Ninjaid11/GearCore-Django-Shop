@@ -1,11 +1,17 @@
+from xml.etree.ElementInclude import include
+
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import update_session_auth_hash
+from django.template.loader import render_to_string
+from django.core.mail import send_mail
+from django.conf import settings
 
-from .models import Product, Brand, Category, Comment, CartItem
-from  .forms import UserUpdateFrom, CommentForm
+
+from .models import Product, Brand, Category, Comment, CartItem, Order
+from  .forms import UserUpdateFrom, CommentForm, OrderForm
 
 
 # Create your views here.
@@ -40,47 +46,140 @@ def product_detail(request, product_name):
         'comments': comments,
         'comment_form': comment_form
     })
-@login_required
+
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, id=product_id)
-    cart_item, created = CartItem.objects.get_or_create(user=request.user, product=product)
-    if not created:
-        cart_item.count += 1
-    cart_item.save()
+
+    if request.user.is_authenticated:
+        cart_item, created = CartItem.objects.get_or_create(user=request.user, product=product)
+        if not created:
+            cart_item.count += 1
+        cart_item.save()
+    else:
+        session_cart = request.session.get('cart', {}) # получаем корзину из сессии
+        product_id_str = str(product_id)
+        if product_id_str in session_cart:
+            session_cart[product_id_str] += 1
+        else:
+            session_cart[product_id_str] = 1
+        request.session['cart'] = session_cart # обновляет корзину в сессии
     return redirect('cart_detail')
 
 def cart_detail(request):
-    cart_items = CartItem.objects.filter(user=request.user)
     total_price = 0
-    for item in cart_items:
-        total_price += item.product.price * item.count
+    if request.user.is_authenticated:
+        cart_items = CartItem.objects.filter(user=request.user)
+        for item in cart_items:
+            total_price += item.product.price * item.count
+    else:
+        session_cart = request.session.get('cart', {})
+        cart_items = []
+
+        for product_id_str, count in session_cart.items():
+            product = get_object_or_404(Product, id=int(product_id_str))
+            total_price += product.price * count
+            cart_items.append({
+                'product': product,
+                'count': count,
+                'total_price': product.price * count
+            })
+
     return render(request, 'cart_item.html', {
         'cart_items': cart_items,
         'total_price': total_price
     })
 
-@login_required
 def cart_plus(request, item_id):
-    item = get_object_or_404(CartItem, id=item_id, user=request.user)
-    item.count += 1
-    item.save()
-    return redirect('cart_detail')
-
-@login_required
-def cart_minus(request, item_id):
-    item = get_object_or_404(CartItem, id=item_id, user=request.user)
-    if item.count > 1:
-        item.count -= 1
+    if request.user.is_authenticated:
+        item = get_object_or_404(CartItem, id=item_id, user=request.user)
+        item.count += 1
         item.save()
     else:
-        item.delete()
+        session_cart = request.session.get('cart', {})
+        product_id_str = str(item_id)
+
+        if product_id_str in session_cart:
+            session_cart[product_id_str] += 1
+        else:
+            session_cart[product_id_str] = 1
+        request.session['cart'] = session_cart
+
     return redirect('cart_detail')
 
-@login_required
-def cart_remove(request, item_id):
-    item = get_object_or_404(CartItem, id=item_id, user=request.user)
-    item.delete()
+def cart_minus(request, item_id):
+    if request.user.is_authenticated:
+        item = get_object_or_404(CartItem, id=item_id, user=request.user)
+        if item.count > 1:
+            item.count -= 1
+            item.save()
+        else:
+            item.delete()
+    else:
+        session_cart = request.session.get('cart', {})
+        product_id_str = str(item_id)
+
+        if product_id_str in session_cart:
+            if session_cart[product_id_str] > 1:
+                session_cart[product_id_str] -= 1
+            else:
+                del session_cart[product_id_str]
+
+        request.session['cart'] = session_cart
+
     return redirect('cart_detail')
+
+def cart_remove(request, item_id):
+    if request.user.is_authenticated:
+        item = get_object_or_404(CartItem, id=item_id, user=request.user)
+        item.delete()
+    else:
+        session_cart = request.session.get('cart', {})
+        product_id_str = str(item_id)
+
+        if product_id_str in session_cart:
+            del session_cart[product_id_str]
+
+        request.session['cart'] = session_cart
+    return redirect('cart_detail')
+
+def order(request):
+    cart_items = CartItem.objects.filter(user=request.user)
+    if request.method == "POST":
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.user = request.user
+            order.save()
+
+            for item in cart_items:
+                order.products.add(item.product)
+            cart_items.delete()
+
+            message = render_to_string('emails/order_confirmation.txt', {
+                'first_name': order.first_name,
+                'last_name': order.last_name,
+                'delivery_day': order.delivery_day,
+                'phone': order.phone
+            })
+            send_mail(
+                subject='Подтверждение заказа',
+                message=message,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[order.email],
+                fail_silently=False
+            )
+            return redirect('/')
+    else:
+        if request.user.is_authenticated:
+            initial_data = {
+                'email': request.user.email
+            }
+            form = OrderForm(initial=initial_data)
+        else:
+            form = OrderForm()
+
+    return render(request, 'order.html', {'form': form, 'cart_items': cart_items})
+
 
 def product_search(request):
     query = request.GET.get('q', '')
