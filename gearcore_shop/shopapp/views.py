@@ -11,7 +11,7 @@ from django.conf import settings
 
 
 from .models import Product, Brand, Category, Comment, CartItem, Order
-from  .forms import UserUpdateFrom, CommentForm, OrderForm
+from .forms import UserUpdateFrom, CommentForm, OrderForm
 
 
 # Create your views here.
@@ -143,17 +143,25 @@ def cart_remove(request, item_id):
     return redirect('cart_detail')
 
 def order(request):
-    cart_items = CartItem.objects.filter(user=request.user)
+    if request.user.is_authenticated:
+        cart_items = CartItem.objects.filter(user=request.user)
+    else:
+        session_cart = request.session.get('cart', {})
+
     if request.method == "POST":
         form = OrderForm(request.POST)
         if form.is_valid():
             order = form.save(commit=False)
-            order.user = request.user
+            if request.user.is_authenticated:
+                order.user = request.user
+            else:
+                order.user = None
             order.save()
 
-            for item in cart_items:
-                order.products.add(item.product)
-            cart_items.delete()
+            if request.user.is_authenticated:
+                cart_items.delete()
+            else:
+                request.session['cart'] = {}
 
             message = render_to_string('emails/order_confirmation.txt', {
                 'first_name': order.first_name,
@@ -170,15 +178,12 @@ def order(request):
             )
             return redirect('/')
     else:
+        initial_data = {}
         if request.user.is_authenticated:
-            initial_data = {
-                'email': request.user.email
-            }
-            form = OrderForm(initial=initial_data)
-        else:
-            form = OrderForm()
+            initial_data['email'] = request.user.email
+        form = OrderForm(initial=initial_data)
 
-    return render(request, 'order.html', {'form': form, 'cart_items': cart_items})
+    return render(request, 'order.html', {'form': form})
 
 
 def product_search(request):
@@ -244,7 +249,7 @@ def change_password(request):
     if request.method == 'POST':
         old_password = request.POST.get('old_password')
         new_password1 = request.POST.get('new_password1')
-        new_password2 = request.POST.get('new_password1')
+        new_password2 = request.POST.get('new_password2')
 
         user = request.user
 
@@ -261,6 +266,17 @@ def change_password(request):
         user.save()
 
         update_session_auth_hash(request, user)
+
+        message = render_to_string('emails/password_changed.txt', {
+            'user': user,
+        })
+        send_mail(
+            subject='Смена пароля на GearCore',
+            message=message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[user.email],
+            fail_silently=False
+        )
 
         return render(request, 'account/change_password.html', {'success': True})
 
