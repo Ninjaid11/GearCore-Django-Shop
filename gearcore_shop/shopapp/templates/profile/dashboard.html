@@ -14,7 +14,6 @@
     <ul>
       <li><a href="/profile">Account Dashboard</a></li>
       <li><a href="{% url 'account_info' %}">Account Information</a></li>
-      <li><a href="{% url 'address_book' %}">Address Book</a></li>
       <li><a href="{% url 'order_history' %}">Orders</a></li>
       <li><a href="{% url 'my_returns' %}">Returns</a></li>
       <li><a href="{% url 'account_logout' %}" class="logout-link">Logout</a></li>
@@ -36,12 +35,6 @@
     <p>{{ user.username }}</p>
     <p>{{ user.email }}</p>
     <a href="{% url 'account_info' %}" class="dashboard-link">Edit</a>
-  </section>
-
-  <section class="dashboard-section">
-    <h2>Address Book</h2>
-    <p>No Saved Address Found</p>
-    <a href="{% url 'address_book' %}" class="dashboard-link">Manage Address</a>
   </section>
 
 </div>

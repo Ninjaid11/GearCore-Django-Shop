@@ -1,4 +1,4 @@
-from xml.etree.ElementInclude import include
+import logging
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
@@ -8,13 +8,13 @@ from django.contrib.auth import update_session_auth_hash
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib import messages
 
 
 from .models import Product, Brand, Category, Comment, CartItem, Order
 from .forms import UserUpdateFrom, CommentForm, OrderForm
 
-
-# Create your views here.
+logger = logging.getLogger("shopapp")
 
 def index(request):
     products = Product.objects.all()
@@ -31,13 +31,19 @@ def product_detail(request, product_name):
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
-            new_comment = Comment(
-                user=request.user,
-                product=product,
-                content=comment_form.cleaned_data["content"]
-            )
-            new_comment.save()
-            return redirect('product_detail', product_name=product.name)
+            try:
+                new_comment = Comment(
+                    user=request.user,
+                    product=product,
+                    content=comment_form.cleaned_data["content"]
+                )
+                new_comment.save()
+                messages.success(request, 'Комментарий добавлен!')
+                logger.info(f"Новый комментарий от {request.user.username} к продукту {product.name}")
+                return redirect('product_detail', product_name=product.name)
+            except Exception as e:
+                logger.error(f'Ошибка при сохранении комментария: {e}')
+                messages.error(request, 'Произошла ошибка. Попробуйте позже.')
     else:
         comment_form = CommentForm()
 
@@ -103,6 +109,7 @@ def cart_plus(request, item_id):
         else:
             session_cart[product_id_str] = 1
         request.session['cart'] = session_cart
+    messages.info(request, "Количество товара было увеличено.")
 
     return redirect('cart_detail')
 
@@ -125,6 +132,7 @@ def cart_minus(request, item_id):
                 del session_cart[product_id_str]
 
         request.session['cart'] = session_cart
+    messages.info(request, "Количество товара было уменьшено.")
 
     return redirect('cart_detail')
 
@@ -140,6 +148,8 @@ def cart_remove(request, item_id):
             del session_cart[product_id_str]
 
         request.session['cart'] = session_cart
+    messages.info(request, "Товара удалён из корзины.")
+
     return redirect('cart_detail')
 
 def order(request):
@@ -151,32 +161,38 @@ def order(request):
     if request.method == "POST":
         form = OrderForm(request.POST)
         if form.is_valid():
-            order = form.save(commit=False)
-            if request.user.is_authenticated:
-                order.user = request.user
-            else:
-                order.user = None
-            order.save()
+            try:
+                order = form.save(commit=False)
+                if request.user.is_authenticated:
+                    order.user = request.user
+                else:
+                    order.user = None
+                order.save()
 
-            if request.user.is_authenticated:
-                cart_items.delete()
-            else:
-                request.session['cart'] = {}
+                if request.user.is_authenticated:
+                    cart_items.delete()
+                else:
+                    request.session['cart'] = {}
 
-            message = render_to_string('emails/order_confirmation.txt', {
-                'first_name': order.first_name,
-                'last_name': order.last_name,
-                'delivery_day': order.delivery_day,
-                'phone': order.phone
-            })
-            send_mail(
-                subject='Подтверждение заказа',
-                message=message,
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[order.email],
-                fail_silently=False
-            )
-            return redirect('/')
+                message = render_to_string('emails/order_confirmation.txt', {
+                    'first_name': order.first_name,
+                    'last_name': order.last_name,
+                    'delivery_day': order.delivery_day,
+                    'phone': order.phone
+                })
+                send_mail(
+                    subject='Подтверждение заказа',
+                    message=message,
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[order.email],
+                    fail_silently=False
+                )
+                logger.info(f"Заказ оформлен: {order.first_name} {order.last_name}, email: {order.email}")
+                messages.success(request, "Ваш заказ успешно оформлен!")
+                return redirect('/')
+            except Exception as e:
+                logger.error(f"Ошибка при оформлении заказа: {e}")
+                messages.error(request, "Произошла ошибка при оформлении заказа. Попробуйте позже.")
     else:
         initial_data = {}
         if request.user.is_authenticated:
@@ -195,8 +211,8 @@ def product_search(request):
             Q(tags__name__icontains=query)
         ).distinct() # чтобы избежать дубликатов
     else:
-        error = "Пожалуйста, введите поисковый запрос."
-        return render(request, "search.html", {'error': error})
+        messages.warning("Пожалуйста, введите поисковый запрос.")
+        return render(request, "search.html")
 
     return render(request, "search.html", {'products': products, 'query': query})
 
@@ -225,20 +241,24 @@ def account_info(request):
     if request.method == 'POST':
         form = UserUpdateFrom(request.POST, instance=request.user)
         if form.is_valid():
-            form.save()
-            return redirect('/profile/account-info/?success=true')
+            try:
+                form.save()
+                logger.info(f"Пользователь {request.user} успешно обновил данные.")
+                messages.success(request, "Данные успешно обновлены!")
+                return redirect('/profile/account-info/')
+            except Exception as e:
+                logger.error(f"Ошибка при обновлении данных пользователя {request.user}: {e}")
+                messages.error(request, "Произошла ошибка при обновлении данных. Попробуйте позже.")
+
     else:
         form = UserUpdateFrom(instance=request.user)
 
     return render(request, 'profile/account_info.html', {'form': form})
 
 @login_required
-def address_book(request):
-    return render(request, 'profile/address_book.html')
-
-@login_required
 def order_history(request):
-    return render(request, 'profile/orders_history.html')
+    orders = Order.objects.filter(user=request.user).prefetch_related('products')
+    return render(request, 'profile/orders_history.html', {'orders': orders})
 
 @login_required
 def my_returns(request):
@@ -281,3 +301,6 @@ def change_password(request):
         return render(request, 'account/change_password.html', {'success': True})
 
     return render(request, 'account/change_password.html')
+
+def error_404(request):
+    return render(request, '404.html')

@@ -580,6 +580,52 @@ footer {
   color: #00bfff;
   filter: drop-shadow(0 0 12px #00bfff);
 }
+/* ==================== СООБЩЕНИЕ ==================== */
+.message-container {
+    position: fixed;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    pointer-events: none;
+}
+
+.message {
+    display: inline-block;
+    padding: 15px 25px;
+    border-radius: 12px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    color: #fff;
+    max-width: 600px;
+    width: fit-content;
+    word-wrap: break-word;
+    text-align: center;
+    background-color: #333;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    animation: fadein 0.5s ease, fadeout 0.5s ease 4s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+    pointer-events: auto;
+}
+
+.message.success {
+    background-color: #28a745;
+}
+.message.info {
+    background-color: #007bff;
+}
+.message.warning {
+    background-color: #ffc107;
+    color: #000;
+}
+.message.error {
+    background-color: #dc3545;
+}
 
 /* ==================== АДАПТИВНОСТЬ ==================== */
 @media (max-width: 900px) {
@@ -652,4 +698,13 @@ footer {
     opacity: 1;
     transform: translate(-50%, -50%);
   }
+}
+
+@keyframes fadein {
+    0%   { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeout {
+    0%   { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(30px); }
 }

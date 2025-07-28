@@ -126,6 +126,7 @@ nav a {
 nav li:hover a {
   color: #000;
 }
+
 /* ====== СООБЩЕНИЕ ОБ УСПЕХЕ ====== */
 .dashboard-message {
   text-align: center;
@@ -219,5 +220,59 @@ form button:hover {
   .dashboard-subtitle {
     font-size: 1.1em;
   }
+}
 
+/* ======= Стили для блока заказов ======= */
 
+.order {
+  background-color: var(--color-product-bg);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border-dark);
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.15);
+  margin-bottom: 30px;
+  animation: fadeInUp 0.6s ease both;
+}
+
+.order h4 {
+  color: var(--color-gold);
+  margin-bottom: 12px;
+  font-weight: 700;
+  font-size: 1.3em;
+  text-shadow: 0 0 8px var(--color-gold);
+}
+
+.order p {
+  color: var(--color-white);
+  margin-bottom: 8px;
+  font-size: 1em;
+}
+
+.order ul {
+  list-style: disc inside;
+  margin-left: 15px;
+  color: var(--color-text-alt);
+  font-size: 0.95em;
+}
+
+.order ul li {
+  margin-bottom: 6px;
+}
+
+hr.order-separator {
+  border: 0;
+  height: 1px;
+  background-color: var(--color-border-dark);
+  opacity: 0.3;
+  margin: 20px 0;
+}
+
+/* Адаптив */
+@media screen and (max-width: 600px) {
+  .order {
+    padding: 15px;
+  }
+  .order h4 {
+    font-size: 1.1em;
+  }
+}

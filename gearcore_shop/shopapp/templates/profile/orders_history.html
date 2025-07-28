@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+  <h1 class="dashboard-title">My Account</h1>
+  <nav>
+    <ul>
+      <li><a href="/profile/">Account Dashboard</a></li>
+      <li><a href="{% url 'account_info' %}">Account Information</a></li>
+      <li><a href="{% url 'order_history' %}">Orders</a></li>
+      <li><a href="{% url 'my_returns' %}">Returns</a></li>
+      <li><a href="{% url 'account_logout' %}" class="logout-link">Logout</a></li>
+    </ul>
+  </nav>
+
+  {% for order in orders %}
+  <div class="order">
+    <h4>Заказ от {{ order.created_at|date:"d.m.Y" }} — доставка {{ order.delivery_day }}</h4>
+    <p><strong>Контакт:</strong> {{ order.first_name }} {{ order.last_name }} ({{ order.phone }})</p>
+    <p><strong>Продукты:</strong></p>
+    <ul>
+      {% for product in order.products.all %}
+        <li>{{ product.name }}</li>
+      {% empty %}
+        <li>Нет продуктов в заказе.</li>
+      {% endfor %}
+    </ul>
+  </div>
+  <hr>
+  {% empty %}
+  <p class="no-orders-message">Вы ещё не сделали ни одного заказа.</p>
+  {% endfor %}
+</div>
+{% endblock %}

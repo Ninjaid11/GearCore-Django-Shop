@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index, product_search, product_by_brand, products_by_category, account_info, address_book, \
+from .views import index, product_search, product_by_brand, products_by_category, account_info, \
     order_history, my_returns, account_dashboard, change_password, product_detail, add_to_cart, cart_detail, cart_plus, \
     cart_minus, cart_remove, order
 
@@ -17,7 +17,6 @@ urlpatterns = [
     path('brand/<str:brand_name>/',   product_by_brand, name='product_by_brand'),
     path('profile/', account_dashboard, name='account_dashboard'),
     path('profile/account-info/', account_info, name='account_info'),
-    path('profile/addresses/', address_book, name='address_book'),
     path('profile/orders/', order_history, name='order_history'),
     path('profile/returns/', my_returns, name='my_returns'),
     path('account/password/change/', change_password, name='change_password')
