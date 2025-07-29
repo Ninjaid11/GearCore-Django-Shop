@@ -14,6 +14,8 @@
   --color-border-dark: #444;
   --color-placeholder: #aaa;
   --color-bg-main: rgb(15, 17, 17);
+  --color-border-dark: #555;
+  --color-product-bg: #1a1a1a;
 }
 
 /* ==================== БАЗОВАЯ СБРОС И ОСНОВА ==================== */
@@ -437,6 +439,25 @@ main {
 .product-card .price {
   font-weight: bold;
   color: var(--color-highlight);
+}
+
+.product-card a {
+  display: inline-block;
+  margin: 8px 5px 0;
+  padding: 6px 12px;
+  font-size: 0.9em;
+  color: black;
+  background-color: var(--color-gold);
+  border: 1px solid var(--color-border-dark);
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.product-card a:hover {
+  background-color: black;
+  color: var(--color-gold);
+  border-color: var(--color-gold);
 }
 
 /* ==================== ТЕГИ ==================== */
