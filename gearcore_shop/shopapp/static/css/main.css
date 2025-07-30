@@ -1,21 +1,19 @@
 /* ==================== ПЕРЕМЕННЫЕ (ЦВЕТА) ==================== */
 :root {
   --color-gold: #FFD700;
-  --color-bg-dark: #000000;
+  --color-bg-dark: #000;
   --color-text: #FFD700;
   --color-text-alt: #888;
-  --color-line: white;
+  --color-line: #fff;
   --color-error: #FF4D4D;
-  --color-product-bg: #222;
+  --color-product-bg: #1a1a1a;
   --color-tag-bg: #333;
   --color-highlight: #0f0;
   --color-bg-darker: #111;
   --color-white: #fff;
-  --color-border-dark: #444;
+  --color-border-dark: #555;
   --color-placeholder: #aaa;
   --color-bg-main: rgb(15, 17, 17);
-  --color-border-dark: #555;
-  --color-product-bg: #1a1a1a;
 }
 
 /* ==================== БАЗОВАЯ СБРОС И ОСНОВА ==================== */
@@ -56,7 +54,6 @@ html, body {
   text-transform: uppercase;
   color: var(--color-gold);
   text-shadow: 0 0 25px var(--color-gold), 0 0 5px var(--color-white);
-  user-select: none;
   line-height: 1;
   margin: 0;
 }
@@ -88,7 +85,6 @@ header {
   flex: none;
 }
 
-
 .right-section {
   position: absolute;
   right: 20px;
@@ -98,7 +94,8 @@ header {
   align-items: center;
   gap: 20px;
 }
-/* ====================  КОРЗИНА ==================== */
+
+/* ==================== КОРЗИНА ==================== */
 .cart-link {
   position: relative;
   display: flex;
@@ -116,8 +113,8 @@ header {
   position: absolute;
   top: -6px;
   right: -10px;
-  background-color: #FF4D4D;
-  color: white;
+  background-color: var(--color-error);
+  color: var(--color-white);
   font-size: 0.75em;
   padding: 2px 6px;
   border-radius: 50%;
@@ -132,8 +129,9 @@ header {
   opacity: 0.5;
 }
 
-/* ====================  АККАУНТ ==================== */
-.account-info {
+/* ==================== АККАУНТ ==================== */
+.account-info,
+.guest-info {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -146,41 +144,31 @@ header {
   object-fit: cover;
 }
 
-.account-text {
+.account-text,
+.guest-text {
   color: var(--color-gold);
   font-weight: 600;
   text-decoration: none;
   transition: text-decoration 0.3s ease;
-}
-
-.account-text:hover {
-  text-decoration: underline;
-}
-
-.guest-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  white-space: nowrap;
+  font-size: 0.9rem;
   cursor: pointer;
+}
+
+.account-text:hover,
+.guest-text:hover {
+  text-decoration: underline;
 }
 
 .enter-icon {
   width: 40px;
   height: 40px;
   object-fit: contain;
+  cursor: pointer;
 }
 
-.guest-text {
-  color: var(--color-gold);
-  font-weight: 600;
-  font-size: 0.9rem;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: text-decoration 0.3s ease;
-}
-
-.guest-text:hover {
-  text-decoration: underline;
+.guest-info {
+  flex-direction: column;
 }
 
 /* ==================== НАВИГАЦИЯ ==================== */
@@ -358,6 +346,7 @@ main {
   position: relative;
   z-index: 1;
 }
+
 /* ==================== БРЕНДЫ ==================== */
 .brands-row {
   display: flex;
@@ -396,8 +385,8 @@ main {
   max-height: 100%;
   object-fit: contain;
 }
-/* ==================== ТОВАРЫ ==================== */
 
+/* ==================== ТОВАРЫ ==================== */
 #product-title {
   padding-left: 20px;
 }
@@ -484,7 +473,8 @@ main {
   text-shadow: 0 0 10px var(--color-gold);
 }
 
-.no-results, .error-message {
+.no-results,
+.error-message {
   text-align: center;
   margin: 30px auto;
   font-size: 1.2em;
@@ -601,52 +591,44 @@ footer {
   color: #00bfff;
   filter: drop-shadow(0 0 12px #00bfff);
 }
+
 /* ==================== СООБЩЕНИЕ ==================== */
 .message-container {
-    position: fixed;
-    bottom: 70px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    pointer-events: none;
+  position: fixed;
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  pointer-events: none;
 }
 
 .message {
-    display: inline-block;
-    padding: 15px 25px;
-    border-radius: 12px;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 14px;
-    color: #fff;
-    max-width: 600px;
-    width: fit-content;
-    word-wrap: break-word;
-    text-align: center;
-    background-color: #333;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    animation: fadein 0.5s ease, fadeout 0.5s ease 4s;
-    opacity: 0;
-    animation-fill-mode: forwards;
-    pointer-events: auto;
+  display: inline-block;
+  padding: 15px 25px;
+  border-radius: 12px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  color: var(--color-white);
+  max-width: 600px;
+  width: fit-content;
+  word-wrap: break-word;
+  text-align: center;
+  background-color: #333;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  animation: fadein 0.5s ease, fadeout 0.5s ease 4s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+  pointer-events: auto;
 }
 
-.message.success {
-    background-color: #28a745;
-}
-.message.info {
-    background-color: #007bff;
-}
-.message.warning {
-    background-color: #ffc107;
-    color: #000;
-}
-.message.error {
-    background-color: #dc3545;
-}
+.message.success { background-color: #28a745; }
+.message.info { background-color: #007bff; }
+.message.warning { background-color: #ffc107; color: #000; }
+.message.error { background-color: #dc3545; }
 
 /* ==================== АДАПТИВНОСТЬ ==================== */
 @media (max-width: 900px) {
@@ -697,17 +679,19 @@ footer {
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(15px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(15px); }
 }
 
 @keyframes fadeInUpHero {
@@ -722,10 +706,11 @@ footer {
 }
 
 @keyframes fadein {
-    0%   { opacity: 0; transform: translateY(30px); }
-    100% { opacity: 1; transform: translateY(0); }
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
+
 @keyframes fadeout {
-    0%   { opacity: 1; transform: translateY(0); }
-    100% { opacity: 0; transform: translateY(30px); }
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(30px); }
 }
