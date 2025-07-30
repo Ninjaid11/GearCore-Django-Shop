@@ -1,11 +1,11 @@
----
+# GearCore Django Shop  🛒
 
-# GearCore Shop 🛒
+![GearCore Logo](images/favicon.ico)
+
 
 **What is this?**
 A simple online store backend built with Django + PostgreSQL. Users browse products, comment, add to cart, and place orders. Authentication handled by django-allauth 🔐.
 
----
 
 ## Features ✨
 
