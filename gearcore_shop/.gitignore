@@ -37,3 +37,6 @@ staticfiles/
 *.pyc
 *.pyo
 *.pyd
+
+# Docker volumes и данные базы
+postgres_data/

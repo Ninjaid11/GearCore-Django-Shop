@@ -16,7 +16,8 @@
               <span class="tag">{{ tag.name }}</span>
             {% endfor %}
           </div>
-          <a href="#">🛒 Корзина</a>
+          <a href="{% url 'add_to_cart' product.id %}">🛒 Корзина</a>
+          <a href="{% url 'product_detail' product.name %}">Подробние</a>
         </div>
       {% endfor %}
     {% else %}
