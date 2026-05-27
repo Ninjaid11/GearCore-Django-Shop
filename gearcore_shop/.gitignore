@@ -1,42 +1,26 @@
-# Python compiled files
+# Python
 __pycache__/
 *.py[cod]
-*$py.class
 
-# Виртуальное окружение
-.venv/
-env/
+# Virtual env
 venv/
+env/
+.venv/
 
-# Файлы настроек IDE
-.vscode/
-.idea/
-
-# Django файлы миграций (можно хранить, но часто игнорят)
-*/migrations/*.pyc
-*/migrations/__pycache__/
-
-# SQLite база (если она есть, у тебя теперь PostgreSQL)
-db.sqlite3
-
-# Логи
+# Logs
 *.log
 
-# Файлы настроек с секретами
+# Environment
 .env
 .env.*
 
-# OS файлы
+# OS files
 .DS_Store
 Thumbs.db
 
-# staticfiles (если собираешь)
+# Django static/media
 staticfiles/
+media/
 
-# Файлы pycache
-*.pyc
-*.pyo
-*.pyd
-
-# Docker volumes и данные базы
+# Docker data
 postgres_data/

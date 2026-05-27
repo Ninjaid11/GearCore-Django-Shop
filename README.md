@@ -1,81 +1,161 @@
-# GearCore Django Shop  🛒
+# 🛒 GearCore Django Shop
 
 ![GearCore Logo](images/favicon.ico)
 
+Django интернет-магазин с поддержкой корзины, заказов, пользователей и административной панели.
 
-**What is this?**
-A simple online store backend built with Django + PostgreSQL. Users browse products, comment, add to cart, and place orders. Authentication handled by django-allauth 🔐.
-
-
-## Features ✨
-
-* Browse products by brand & category 🔍
-* Product pages + user comments 💬
-* Cart works for logged-in users & guests 🛍️
-* Place orders + get email confirmation 📧
-* User profile: update info & view order history 👤
-* Change password with email notification 🔑
-* User registration/login via **django-allauth**
-* Logs key actions & shows friendly messages 📋
+Проект реализован как backend-практика с использованием **Django**, **PostgreSQL** и **Docker**.
+Основной фокус — работа с базой данных, авторизация пользователей и построение e-commerce логики.
 
 ---
 
-## Tech Stack 🛠️
+# 🚀 Возможности
 
-* Python & Django
-* PostgreSQL
-* django-allauth (auth & registration)
-* SMTP email for notifications
-* Django messages framework
-
----
-
-## Quick Start 🚀
-
-```bash
-git clone https://github.com/Ninjaid11/GearCore.git
-cd gearcore_shop
-python -m venv venv
-source venv/bin/activate  # or venv\Scripts\activate on Windows
-pip install -r requirements.txt
-# configure settings.py (DB, email, secret key)
-python manage.py migrate
-python manage.py runserver
-```
-
-Open: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+* 📦 Каталог товаров с категориями и брендами
+* 🛍 Корзина (для гостей и авторизованных пользователей)
+* 💬 Комментарии к товарам
+* 📑 Оформление заказов
+* 📧 Email-уведомления о заказах
+* 👤 Профиль пользователя и история заказов
+* 🔐 Регистрация и авторизация (django-allauth)
+* 🗄 Хранение данных в PostgreSQL
+* 🐳 Полная поддержка Docker
 
 ---
 
-## ⚙️ Environment Setup (.env)
+# ⚙️ Технологии
 
-This project uses a `.env` file to keep sensitive data safe (like database credentials, secret keys, and email settings).
-Make sure you create a `.env` file in the project root with all required variables before running the app! 🔐
+* 🐍 Python 3.11
+* 🎯 Django
+* 🐘 PostgreSQL 15
+* 🔐 django-allauth
+* 📨 SMTP (email-уведомления)
+* 🐳 Docker & Docker Compose
 
-Example `.env` variables you might need:
+---
+
+# ⚙️ Environment Setup
+
+Перед запуском проекта **обязательно необходимо создать `.env` файл** в корне проекта.
+
+Без него приложение **не сможет запуститься**, так как отсутствуют настройки базы данных, Django и email.
+
+---
+
+## ⚠️ Обязательный шаг
+
+## 📄 Пример `.env`
+
+Откройте файл `.env` и заполните его:
 
 ```env
 SECRET_KEY=your_secret_key_here
 DEBUG=True
-DATABASE_URL=postgres://user:password@localhost:5432/dbname
-EMAIL_HOST=smtp.example.com
-EMAIL_PORT=587
-EMAIL_HOST_USER=your_email@example.com
-EMAIL_HOST_PASSWORD=your_email_password
-DEFAULT_FROM_EMAIL=your_email@example.com
-```
+ALLOWED_HOSTS=127.0.0.1,localhost
 
-Without `.env` or proper environment variables, the app **won't work properly** ⚠️
+DB_NAME=mydb
+DB_USER=myuser
+DB_PASSWORD=mypassword
+DB_HOST=db
+DB_PORT=5432
+
+EMAIL_HOST_USER=example@gmail.com
+EMAIL_HOST_PASSWORD=your_password
+DEFAULT_FROM_EMAIL=example@gmail.com
+```
 
 ---
 
-## How it works ⚙️
+## ❗ Важно
 
-* Browse & search products
-* Add comments on product pages
-* Add/remove/change product quantities in cart
-* Place orders with confirmation emails
-* Manage user profile & password
-* Auth via django-allauth with email verification
+* `.env` файл **не хранится в репозитории**
+* он создаётся локально каждым пользователем
+* без него приложение **не сможет подключиться к базе данных**
+* неправильная конфигурация приведёт к ошибке запуска
+
+---
+
+# 🐳 Полный запуск проекта
+
+## 1️⃣ Клонирование репозитория
+
+```bash
+git clone https://github.com/Ninjaid11/GearCore-Django-Shop.git
+cd gearcore_shop
+```
+
+---
+
+## 2️⃣ Запуск контейнеров
+
+```bash
+docker compose up --build
+```
+
+---
+
+## 3️⃣ Применение миграций
+
+```bash
+docker compose exec web python manage.py migrate
+```
+
+---
+
+## 4️⃣ Создание администратора
+
+```bash
+docker compose exec web python manage.py createsuperuser
+```
+
+---
+
+# 🌐 Доступ к приложению
+
+* 🏠 Сайт: [http://localhost:8000](http://localhost:8000)
+* ⚙️ Админка: [http://localhost:8000/admin](http://localhost:8000/admin)
+
+---
+
+# 🧠 Архитектура проекта
+
+* Django работает в контейнере `web`
+* PostgreSQL работает в контейнере `db`
+* Связь через Docker network (`db:5432`)
+* Данные сохраняются в Docker volume
+* Миграции создают структуру базы данных
+
+---
+
+# 🗄 База данных
+
+* PostgreSQL 15
+* Persistent volume: `postgres_data`
+* Изолированная Docker среда
+
+---
+
+# 📌 Примечания
+
+* Проект предназначен для разработки (development mode)
+* `DEBUG=True` включён по умолчанию
+* Для production требуется:
+
+  * Gunicorn
+  * Nginx
+  * отключение DEBUG
+  * безопасный `.env`
+
+---
+
+# 💡 Цель проекта
+
+Проект создан для практики backend-разработки:
+
+* Django ORM и работа с моделями
+* Построение e-commerce логики
+* Работа с Docker и PostgreSQL
+* Авторизация пользователей
+* Архитектура реального backend-проекта
 
 ---

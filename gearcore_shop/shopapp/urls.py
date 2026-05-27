@@ -19,5 +19,5 @@ urlpatterns = [
     path('profile/account-info/', account_info, name='account_info'),
     path('profile/orders/', order_history, name='order_history'),
     path('profile/returns/', my_returns, name='my_returns'),
-    path('account/password/change/', change_password, name='change_password')
+    path('account/password/change/', change_password, name='change_password'),
 ]
