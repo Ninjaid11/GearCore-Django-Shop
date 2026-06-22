@@ -4,17 +4,17 @@ from django.contrib.auth.models import User
 
 from .models import Comment, Order
 
-class UserUpdateFrom(forms.ModelForm):
+class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'email']
         widgets = {
             'username': forms.TextInput(attrs={
-                'class': 'from-control',
+                'class': 'form-control',
                 'placeholder': 'Username'
             }),
             'email': forms.EmailInput(attrs={
-                'class': 'from-control',
+                'class': 'form-control',
                 'placeholder': 'Email'
             })
         }

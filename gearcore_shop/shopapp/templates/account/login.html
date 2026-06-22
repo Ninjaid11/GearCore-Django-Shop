@@ -16,16 +16,16 @@
 
       {{ form.login.label_tag }}
       {{ form.login }}
+      {{ form.login.errors }}
 
       {{ form.password.label_tag }}
       {{ form.password }}
+      {{ form.password.errors }}
 
       {% if redirect_field_value %}
         <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
       {% endif %}
-
       <button type="submit">Войти</button>
-
       <div class="auth-link">
         <a href="{% url 'account_reset_password' %}">Забыли пароль?</a><br>
         <a href="{% url 'account_signup' %}">Нет аккаунта? Зарегистрируйтесь</a>

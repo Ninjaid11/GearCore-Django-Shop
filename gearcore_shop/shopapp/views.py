@@ -12,7 +12,7 @@ from django.contrib import messages
 
 
 from .models import Product, Brand, Category, Comment, CartItem, Order
-from .forms import UserUpdateFrom, CommentForm, OrderForm
+from .forms import UserUpdateForm, CommentForm, OrderForm
 
 logger = logging.getLogger("shopapp")
 
@@ -239,7 +239,7 @@ def account_dashboard(request):
 @login_required
 def account_info(request):
     if request.method == 'POST':
-        form = UserUpdateFrom(request.POST, instance=request.user)
+        form = UserUpdateForm(request.POST, instance=request.user)
         if form.is_valid():
             try:
                 form.save()
@@ -251,7 +251,7 @@ def account_info(request):
                 messages.error(request, "Произошла ошибка при обновлении данных. Попробуйте позже.")
 
     else:
-        form = UserUpdateFrom(instance=request.user)
+        form = UserUpdateForm(instance=request.user)
 
     return render(request, 'profile/account_info.html', {'form': form})
 
